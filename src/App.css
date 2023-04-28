@@ -1,3 +1,17 @@
+/* Estilos generales. */
+*{
+  margin: 0;
+  padding: 0;
+  font-family: 'Roboto';
+}
+
+/* Títulos secciones. */
+.divSobreNosotros h2, .divNuestrasInstalaciones h2, .divServicios h2{
+  text-transform: uppercase;
+  font-size: 2em;
+  font-weight: lighter;
+}
+
 /* Header. */
 header{
   position: absolute;
@@ -35,11 +49,11 @@ header .navbar{
   bottom: 40% !important;
   text-transform: uppercase;
 }
-header .logo a{
-  color: #fff;
-  font-size: 1.6em;
-  font-family: 'calibri';
-  font-weight: lighter;
+header .logo_header {
+  width: 20%;
+}
+header .logo_header img {
+  width: 100%;
 }
 #navbarText{
   flex-grow: 0;
@@ -60,10 +74,33 @@ header .logo a{
 
 
 /* Sobre nosotros. */
-.divSobreNosotros .divImg{
-  padding-left: 0;
-  padding-right: 0;
+.divSobreNosotros{
+  display: flex;
+  padding: 40px;
+  align-items: center;
+}
+
+.divSobreNosotros .divImg {
+  margin: 30px;
   box-shadow: 0px 10px 20px 0px rgba(0, 0, 0, 0.30);
+}
+
+.divSobreNosotros h2 {
+  color: #364991;
+}
+
+.divSobreNosotros .divTextAbout {
+  padding: 30px;
+}
+
+.divSobreNosotros .divTextAbout p {
+  color: #212121;
+  font-size: 1.2rem;
+  font-weight: lighter;
+}
+
+.btnAbout {
+  background-color: #364991 !important;
 }
 
 
@@ -71,12 +108,20 @@ header .logo a{
 
 /* Héroe. */
 .divHeroe{
-  background-color: #212121;
+  background-color: #364991;
 }
-.divHeroe h1{
+.divHeroe h3{
   font-size: 2rem;
-  font-weight: lighter;
   padding-bottom: 20px;
+}
+
+.btnHeroe {
+  color: #fff !important;
+  border-color: #fff !important;
+}
+
+.btnHeroe:hover{
+  border-color: #3E4359 !important;
 }
 
 
@@ -86,6 +131,11 @@ header .logo a{
 .divNuestrasInstalaciones{
   padding: 100px 0;
 }
+
+.divNuestrasInstalaciones h2 {
+  color: #364991;
+}
+
 .divNuestrasInstalaciones .card{
   box-shadow: 0px 10px 20px 0px rgba(0, 0, 0, 0.30);
 }
@@ -95,18 +145,22 @@ header .logo a{
 
 /* Servicios. */
 .wrapper{
-  background-color: #364991;
+  background-color: #3E4359;
   text-align: center;
 }
 .divServicios h2{
   border-bottom: none !important;
   color: #fff;
 }
-.divServicios h3{
+.divServicios .divServicio h3{
   color: #fff;
+  font-weight: lighter;
+  text-transform: uppercase;
 }
-.divServicios p{
+.divServicios .divServicio p{
   color: #cacaca;
+  font-size: .9rem;
+  font-weight: lighter;
 }
 
 

@@ -66,7 +66,7 @@ export const EditarPista = () => {
         .then(function (response) {
 
           //Reedirigimos a pistas al crear una pista.
-          navigate("/api/pistas");
+          navigate("/pistas");
 
           //Vaciamos los campos del formulario.
           contexto.setPrecioLuz('');

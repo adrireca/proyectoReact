@@ -74,7 +74,7 @@ export const Pistas = () => {
                         <p>Precio: {p.precioPista}€</p>
                         <div className="d-flex justify-content-around align-items-center">
                           {/* Al click del botón editar, reedirigimos a editar pista. */}
-                          <Link to="/api/editar-pista"><button onClick={() => contexto.setId(p.id)} className="btn btn-sm btn-outline-primary" type="button" aria-expanded="false">Editar</button></Link>
+                          <Link to="/editar-pista"><button onClick={() => contexto.setId(p.id)} className="btn btn-sm btn-outline-primary" type="button" aria-expanded="false">Editar</button></Link>
                           {/* Al click del botón borrar, llama a la función borrar. */}
                           <button id={p.id} onClick={(e) => borrar(e)} className="btn btn-sm btn-outline-danger" type="button" aria-expanded="false">Eliminar</button>
                           {p.disponible === 1 ?

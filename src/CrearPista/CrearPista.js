@@ -2,15 +2,18 @@ import React, { useContext } from 'react';
 import { datosContexto } from '../contextos/DatosProveedor';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { Exito } from '../Exito/Exito';
+
 
 export const CrearPista = () => {
 
-    //Obtenemos todos los datos del contexto.
+    //Importa los datos del contexto.
     const contexto = useContext(datosContexto);
 
     //Hook navigate para reedirigir a otro lugar de la web.
     const navigate = useNavigate();
 
+    /* Guarda una pista */
     const store = async (e) => {
         //Deshabilitamos el refresco al click del botón.
         e.preventDefault();
@@ -53,7 +56,7 @@ export const CrearPista = () => {
             })
 
             //Reedirigimos a pistas al crear una pista.
-            navigate("/api/pistas");
+            navigate("/pistas");
 
             //Vaciamos los campos del formulario.
             contexto.setPrecioLuz('');
@@ -62,6 +65,7 @@ export const CrearPista = () => {
             return error.message;
         }
     };
+
 
     return (
 
@@ -103,7 +107,8 @@ export const CrearPista = () => {
                                     <option value="futbolSala">Fútbol sala</option>
                                 </select>
                             </div>
-                            <button id='boton' type="submit" className="btn btn-primary">Submit</button>
+                            {/* Crea pista y mensaje de confirmación. */}
+                            <Exito />
                         </form>
                     </div>
                 </div>
