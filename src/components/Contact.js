@@ -67,12 +67,13 @@ export const Contact = () => {
                 <Box
                     sx={{
                         marginTop: 8,
+                        paddingTop: '100px',
                         display: 'flex',
                         flexDirection: 'column',
                         alignItems: 'center',
                     }}
                 >
-                    <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+                    <Avatar sx={{ m: 1, bgcolor: 'primary.main' }}>
                         <LockOutlinedIcon />
                     </Avatar>
                     <Typography component="h1" variant="h5">
@@ -85,11 +86,11 @@ export const Contact = () => {
                                     type='text'
                                     onChange={(e) => { setFirstName(e.target.value) }}
                                     autoComplete="given-name"
-                                    name="firstName"
+                                    name="name"
                                     required
                                     fullWidth
-                                    id="firstName"
-                                    label="First Name"
+                                    id="name"
+                                    label="Nombre"
                                     autoFocus
                                 />
                             </Grid>
@@ -99,9 +100,9 @@ export const Contact = () => {
                                     onChange={(e) => { setLastName(e.target.value) }}
                                     required
                                     fullWidth
-                                    id="lastName"
-                                    label="Last Name"
-                                    name="lastName"
+                                    id="last-name"
+                                    label="Apellidos"
+                                    name="last-name"
                                     autoComplete="family-name"
                                 />
                             </Grid>
@@ -112,7 +113,7 @@ export const Contact = () => {
                                     required
                                     fullWidth
                                     id="email"
-                                    label="Email Address"
+                                    label="Email"
                                     name="email"
                                     autoComplete="email"
                                 />
@@ -146,7 +147,7 @@ export const Contact = () => {
                             <Grid item xs={12}>
                                 <FormControlLabel
                                     control={<Checkbox value="allowExtraEmails" color="primary" />}
-                                    label="I want to receive inspiration, marketing promotions and updates via email."
+                                    label="Quiero recibir inspiración, promociones de marketing y actualizaciones por correo electrónico."
                                 />
                             </Grid>
                         </Grid>
@@ -154,6 +155,7 @@ export const Contact = () => {
                             type="submit"
                             fullWidth
                             variant="contained"
+                            className='btnContact'
                             sx={{ mt: 3, mb: 2 }}
                         >
                             Enviar
@@ -161,7 +163,7 @@ export const Contact = () => {
                         <Grid container justifyContent="flex-end">
                             <Grid item>
                                 <Link to={"/login"} variant="body2" className='enlacesContact'>
-                                    Already have an account? Sign in
+                                    ¿Ya tienes una cuenta? Inicia sesión
                                 </Link>
                             </Grid>
                         </Grid>

@@ -12,14 +12,14 @@ export const Servicios = () => {
           <div className="row g-4 py-5 row-cols-1 row-cols-lg-3">
             <div className="divServicio feature col">
               <img src="./img/tennis-3-svgrepo-com.svg" alt="Icono tenis" />
-              <h3 className="fs-5 pt-3">Clase de tenis</h3>
+              <h3 className="fs-5 pt-3">Clases de tenis</h3>
               <p>
                 Pistas de tenis de tierra batida, dura y de césped.
               </p>
             </div>
             <div className="divServicio feature col">
               <img src="./img/padel_sport_icon_141873.svg" alt="Icono padel" />
-              <h3 className="fs-5 pt-3">Clase de pádel</h3>
+              <h3 className="fs-5 pt-3">Clases de pádel</h3>
               <p>
                 Pistas de pádel modernas.
               </p>
@@ -39,10 +39,10 @@ export const Servicios = () => {
               </p>
             </div>
             <div className="divServicio feature col">
-              <img src="./img/car_parking.svg" alt="Icono parking" />
-              <h3 className="fs-5 pt-3">Parking privado</h3>
+              <img src="./img/gym-svgrepo-com.svg" alt="Icono parking" />
+              <h3 className="fs-5 pt-3">Gimnasio</h3>
               <p>
-                Aparcamiento privado para 150 vehículos.
+                Completamente equipado para mantenerte en forma.
               </p>
             </div>
             <div className="divServicio feature col">

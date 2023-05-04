@@ -42,19 +42,20 @@ export const Nav = () => {
                         {/* Logo header. */}
                         <div className="logo_header">
                             <Link to="/" className='enlaces'>
-                                <img src="img/logo_club_1.png" alt="Logo" />
+                                <img src="img/logo_club_2.png" alt="Logo" />
                             </Link>
                         </div>
 
                         {/* Menú barra navegación. */}
-                        <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-                            <div>
-                                <Button
+                        <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, justifyContent:'end', marginRight: '15px', alignItems: 'center' }}>
+                            
+                                {/* <Button
                                     id="basic-button"
                                     aria-controls={open ? 'basic-menu' : undefined}
                                     aria-haspopup="true"
                                     aria-expanded={open ? 'true' : undefined}
                                     onClick={handleClick}
+                                    sx={{my: 2, color: '#fff', display: 'block'}}
                                 >
                                     Deportes
                                 </Button>
@@ -71,41 +72,25 @@ export const Nav = () => {
                                     <MenuItem onClick={handleClose}>Pádel</MenuItem>
                                     <MenuItem onClick={handleClose}>Fútbol</MenuItem>
                                     <MenuItem onClick={handleClose}>Fútbol sala</MenuItem>
-                                </Menu>
-                            </div>
-                            <Link to={'/pistas'} className={({ isActive }) => isActive ? 'nav-link activado enlaces' : 'nav-link enlaces'}>
-                                <Button
-                                    sx={{ my: 2, color: 'white', display: 'block' }}
-                                >
-                                    Pistas
-                                </Button>
-                            </Link>
-                            <Link to={'/crear-pista'} className={({ isActive }) => isActive ? 'nav-link activado enlaces' : 'nav-link enlaces'}>
-                                <Button
-                                    sx={{ my: 2, color: 'white', display: 'block' }}
-                                >
-                                    Crear pista
-                                </Button>
-                            </Link>
-                            <Link to={'/reservas'} className={({ isActive }) => isActive ? 'nav-link activado enlaces' : 'nav-link enlaces'}>
-                                <Button
-                                    sx={{ my: 2, color: 'white', display: 'block' }}
-                                >
-                                    Reservas
-                                </Button>
-                            </Link>
-                            <Link to={'/contacto'} className={({ isActive }) => isActive ? 'nav-link activado enlaces' : 'nav-link enlaces'}>
-                                <Button
-                                    sx={{ my: 2, color: 'white', display: 'block' }}
-                                >
-                                    Contacto
-                                </Button>
-                            </Link>
+                                </Menu> */}
+                            
+                            <NavLink to={'/pistas'} className={({isActive}) => isActive ? 'enlaces activado' : 'enlaces'}>
+                                Pistas
+                            </NavLink>
+                            <NavLink to={'/crear-pista'} className={({isActive}) => isActive ? 'enlaces activado' : 'enlaces'}>
+                                Crear Pista
+                            </NavLink>
+                            <NavLink to={'/reservas'} className={({isActive}) => isActive ? 'enlaces activado' : 'enlaces'}>
+                                Reservas
+                            </NavLink>
+                            <NavLink to={'/contacto'} className={({isActive}) => isActive ? 'enlaces activado' : 'enlaces'}>
+                                Contacto
+                            </NavLink>
                         </Box>
 
                         <Box sx={{ flexGrow: 0 }}>
-                            <Tooltip title="Open settings">
-                                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                            <Tooltip title="Identificarse">
+                                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }} className='btnUserNav'>
                                     <AccountCircleIcon />
                                 </IconButton>
                             </Tooltip>
@@ -126,14 +111,14 @@ export const Nav = () => {
                                 onClose={handleCloseUserMenu}
                             >
                                 {/* Menu usuario. */}
-                                <Link to="/login" className='enlaces'>
+                                <Link to="/login" className='linkBtnUser'>
                                     <MenuItem onClick={handleCloseUserMenu}>
-                                        <Typography textAlign="center">Sign in</Typography>
+                                        <Typography textAlign="center">Inicia sesión</Typography>
                                     </MenuItem>
                                 </Link>
-                                <Link to="/signup" className='enlaces'>
+                                <Link to="/signup" className='linkBtnUser'>
                                     <MenuItem onClick={handleCloseUserMenu}>
-                                        <Typography textAlign="center">Sign up</Typography>
+                                        <Typography textAlign="center">Regístrate</Typography>
                                     </MenuItem>
                                 </Link>
                             </Menu>

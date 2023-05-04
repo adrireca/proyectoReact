@@ -71,16 +71,17 @@ export const Signup = () => {
         <Box
           sx={{
             marginTop: 8,
+            paddingTop: '100px',
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+          <Avatar sx={{ m: 1, bgcolor: 'primary.main' }}>
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign up
+            Registro
           </Typography>
           <Box component="form" noValidate onSubmit={onSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
@@ -93,7 +94,7 @@ export const Signup = () => {
                   required
                   fullWidth
                   id="firstName"
-                  label="First Name"
+                  label="Nombre"
                   autoFocus
                 />
               </Grid>
@@ -104,7 +105,7 @@ export const Signup = () => {
                   required
                   fullWidth
                   id="lastName"
-                  label="Last Name"
+                  label="Apellidos"
                   name="lastName"
                   autoComplete="family-name"
                 />
@@ -116,7 +117,7 @@ export const Signup = () => {
                   required
                   fullWidth
                   id="email"
-                  label="Email Address"
+                  label="Email"
                   name="email"
                   autoComplete="email"
                 />
@@ -128,7 +129,7 @@ export const Signup = () => {
                   required
                   fullWidth
                   name="password"
-                  label="Password"
+                  label="Contraseña"
                   id="password"
                   autoComplete="new-password"
                 />
@@ -136,7 +137,7 @@ export const Signup = () => {
               <Grid item xs={12}>
                 <FormControlLabel
                   control={<Checkbox value="allowExtraEmails" color="primary" />}
-                  label="I want to receive inspiration, marketing promotions and updates via email."
+                  label="Quiero recibir inspiración, promociones de marketing y actualizaciones por correo electrónico."
                 />
               </Grid>
             </Grid>
@@ -144,14 +145,15 @@ export const Signup = () => {
               type="submit"
               fullWidth
               variant="contained"
+              className='btnSignup'
               sx={{ mt: 3, mb: 2 }}
             >
-              Sign Up
+              Regístrate
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link to={"/signin"} variant="body2" className='enlacesSignup'>
-                  Already have an account? Sign in
+                <Link to={"/login"} variant="body2" className='enlacesSignup'>
+                  ¿Ya tienes una cuenta? Inicia sesión
                 </Link>
               </Grid>
             </Grid>

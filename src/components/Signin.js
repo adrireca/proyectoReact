@@ -76,6 +76,7 @@ export const Signin = () => {
         <Box
           sx={{
             marginTop: 8,
+            paddingTop: '100px',
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
@@ -85,7 +86,7 @@ export const Signin = () => {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Inicia sesión
+            Iniciar sesión
           </Typography>
           <Box component="form" onSubmit={onSubmit} noValidate sx={{ mt: 1 }}>
             <TextField
@@ -119,6 +120,7 @@ export const Signin = () => {
               type="submit"
               fullWidth
               variant="contained"
+              className='btnSignin'
               sx={{ mt: 3, mb: 2 }}
             >
               Inicia sesión
@@ -131,7 +133,7 @@ export const Signin = () => {
               </Grid>
               <Grid item>
                 <Link to="/signup" variant="body2" className='enlacesSignin'>
-                  ¿No tienes una cuenta? Inscribirse
+                  ¿No tienes una cuenta? Registrarse
                 </Link>
               </Grid>
             </Grid>
