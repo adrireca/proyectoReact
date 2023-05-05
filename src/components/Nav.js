@@ -74,6 +74,7 @@ export const Nav = () => {
                                     <MenuItem onClick={handleClose}>Fútbol sala</MenuItem>
                                 </Menu> */}
                             
+                            {/* Detecta si se ha pulsado el enlace. Si es así, se le añade un estilo. */}
                             <NavLink to={'/pistas'} className={({isActive}) => isActive ? 'enlaces activado' : 'enlaces'}>
                                 Pistas
                             </NavLink>

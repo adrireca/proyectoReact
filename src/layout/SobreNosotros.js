@@ -9,7 +9,7 @@ export const SobreNosotros = () => {
       <Container className="divSobreNosotros">
       <div className="divImg col-10 col-sm-8 col-lg-6">
             <img
-              src="./img/INICIO_sobre_nosotros.jpg"
+              src="./img/img_about.jpg"
               className="d-block mx-lg-auto img-fluid"
               alt="Bootstrap Themes"
               width="700"
@@ -18,7 +18,7 @@ export const SobreNosotros = () => {
             />
           </div>
           <div className="divTextAbout col-lg-6">
-            <h2 className="mb-3">Sobre nosotros</h2>
+            <h2 className="mb-3">Sportclub</h2>
             <p>
               Quickly design and customize responsive mobile-first sites with
               Bootstrap, the world’s most popular front-end open source toolkit,

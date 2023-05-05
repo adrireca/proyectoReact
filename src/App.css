@@ -111,7 +111,7 @@ header .logo_header img {
 /* Sobre nosotros. */
 .divSobreNosotros{
   display: flex;
-  padding: 40px;
+  padding: 100px 40px;
   align-items: center;
 }
 
