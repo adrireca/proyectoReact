@@ -1,39 +1,71 @@
-import * as React from 'react';
+import React, { useContext, useEffect } from 'react';
 import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Grid from '@mui/material/Grid';
-import Stack from '@mui/material/Stack';
+// import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { datosContexto } from '../contextos/DatosProveedor';
+import axios from 'axios';
+import { red } from '@mui/material/colors';
+import { green } from '@mui/material/colors';
+import { Box } from '@mui/material';
+import { Link } from 'react-router-dom';
 
-const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+/* Colores personalizados. */
+const redColor = red[500];
+const greenColor = green[500];
+
+
+// const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
 const theme = createTheme();
 
 export const Tracks = () => {
+
+    //Obtenemos todos los datos del contexto.
+    const contexto = useContext(datosContexto);
+
+    const borrar = ((e) => {
+        var data = '';
+
+        ////Preparamos el objeto con los datos, la url a la api y la petición.
+        var config = {
+            method: 'delete',
+            maxBodyLength: Infinity,
+            url: `http://localhost:8090/api/pistas/${e.target.id}`,
+            headers: {},
+            data: data
+        };
+
+        //Petición delete con axios.
+        axios(config)
+            .then(function (response) {
+                console.log(JSON.stringify(response.data));
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    });
+
+
+    //Muestra las pistas al cargar la página.
+    useEffect(() => {
+        contexto.getPistas();
+    }, []);
+
     return (
         <ThemeProvider theme={theme}>
             <main>
-                <Container maxWidth="sm">
-                    <Typography
-                        component="h1"
-                        variant="h2"
-                        align="center"
-                        color="text.primary"
-                        gutterBottom
-                    >
-                        Album layout
+                <Container className='divTracks' maxWidth="sm">
+                    <Typography className='titleTracks' variant="h2" align="center" color="text.secondary" >
+                        Nuestras pistas
                     </Typography>
-                    <Typography variant="h5" align="center" color="text.secondary" paragraph>
-                        Something short and leading about the collection below—its contents,
-                        the creator, etc. Make it short and sweet, but not too short so folks
-                        don&apos;t simply skip over it entirely.
-                    </Typography>
-                    <Stack
+                    {/* <Stack
                         sx={{ pt: 4 }}
                         direction="row"
                         spacing={2}
@@ -41,12 +73,83 @@ export const Tracks = () => {
                     >
                         <Button variant="contained">Main call to action</Button>
                         <Button variant="outlined">Secondary action</Button>
-                    </Stack>
+                    </Stack> */}
                 </Container>
 
-                <Container sx={{ py: 8 }} maxWidth="md">
+                <Container sx={{ py: 8 }} maxWidth="lg">
                     <Grid container spacing={4}>
-                        {cards.map((card) => (
+                        {/* Se recorre y se comprueba si existen o no pistas. */}
+                        {contexto.pistas.pistas ?
+                            contexto.pistas.pistas.map((p, i) => {
+                                return (
+                                    <Grid item key={i} xs={12} sm={6} md={4}>
+                                        <Card
+                                            sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
+                                        >
+                                            {/* Dependiendo el tipo de pista, se le añade una u otra imagen. */}
+                                            {p.tipoPista === 'tenis' ?
+                                                <CardMedia
+                                                    component="img"
+                                                    image="../img/pista_tenis.jpg"
+                                                    alt="tenis"
+                                                />
+                                                : ''}
+                                            {p.tipoPista === 'padel' ?
+                                                <CardMedia
+                                                    component="img"
+                                                    image="../img/pista_padel.jpg"
+                                                    alt="tenis"
+                                                />
+                                                : ''}
+                                            {p.tipoPista === 'futbol' ?
+                                                <CardMedia
+                                                    component="img"
+                                                    image="../img/pista_futbol.jpg"
+                                                    alt="tenis"
+                                                />
+                                                : ''}
+                                            {p.tipoPista === 'futbolSala' ?
+                                                <CardMedia
+                                                    component="img"
+                                                    image="../img/pista_futbolSala.jpg"
+                                                    alt="tenis"
+                                                />
+                                                : ''}
+                                            <CardContent sx={{ flexGrow: 1 }}>
+                                                {/* Se hacen varias comprobaciones para mostrar uno u otro resultado. */}
+                                                {p.luz === 1 ?
+                                                    <Typography gutterBottom variant="body2" >Luz disponible.</Typography>
+                                                    :
+                                                    <   Typography gutterBottom variant="body2" >Luz no disponible.</Typography>
+                                                }
+                                                {p.cubierta === 1 ?
+                                                    <Typography gutterBottom variant="body2" >Pista cubierta.</Typography>
+                                                    :
+                                                    <   Typography gutterBottom variant="body2" >Pista no cubierta.</Typography>
+                                                }
+                                                <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                                                    <Typography variant="body2" >{p.precioPista}€ / hora</Typography>
+                                                    
+                                                    {p.disponible === 1 ?
+                                                        <Typography variant="body2" color={greenColor} >Disponible</Typography>
+                                                        :
+                                                        <   Typography variant="body2" color={redColor} >No disponible</Typography>
+                                                    }
+                                                </Box>
+
+                                            </CardContent>
+                                            <CardActions>
+                                                <Link to='/editar-pista' ><Button onClick={() => contexto.setId(p.id)} size="small">Editar</Button></Link>
+                                                <Button id={p.id} onClick={(e) => borrar(e)} size="small">Eliminar</Button>
+                                            </CardActions>
+                                        </Card>
+                                    </Grid>
+                                )
+                            })
+
+                            : ''}
+
+                        {/* {cards.map((card) => (
                             <Grid item key={card} xs={12} sm={6} md={4}>
                                 <Card
                                     sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
@@ -75,7 +178,7 @@ export const Tracks = () => {
                                     </CardActions>
                                 </Card>
                             </Grid>
-                        ))}
+                        ))} */}
                     </Grid>
                 </Container>
             </main>

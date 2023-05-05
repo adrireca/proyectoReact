@@ -13,22 +13,22 @@ export const Instalaciones = () => {
         <Row xs={1} md={3} className="g-4">
           <Col>
             <Card>
-              <Card.Img variant="top" src="./img/wimbledon-pistas.jpg" />
+              <Card.Img variant="top" src="./img/pista_tenis.jpg" />
             </Card>
           </Col>
           <Col>
             <Card>
-              <Card.Img variant="top" src="./img/padel1.jpg" />
+              <Card.Img variant="top" src="./img/pista_padel.jpg" />
             </Card>
           </Col>
           <Col>
             <Card>
-              <Card.Img variant="top" src="./img/futbol1.jpg" />
+              <Card.Img variant="top" src="./img/pista_futbol.jpg" />
             </Card>
           </Col>
           <Col>
             <Card>
-              <Card.Img variant="top" src="./img/futbolSala1.jpg" />
+              <Card.Img variant="top" src="./img/pista_futbolSala.jpg" />
             </Card>
           </Col>
           <Col>
