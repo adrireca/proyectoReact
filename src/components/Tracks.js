@@ -20,15 +20,16 @@ import { Link } from 'react-router-dom';
 const redColor = red[500];
 const greenColor = green[500];
 
-
-// const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-
+/* */
 const theme = createTheme();
 
 export const Tracks = () => {
 
-    //Obtenemos todos los datos del contexto.
+    /* Obtenemos todos los datos del contexto. */
     const contexto = useContext(datosContexto);
+
+    /* Si no hay token reedirige al login. */
+    contexto.loginRedirect();
 
     const borrar = ((e) => {
         var data = '';

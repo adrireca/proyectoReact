@@ -27,6 +27,9 @@ export const EditarPista = () => {
   //Obtenemos todos los datos del contexto.
   const contexto = useContext(datosContexto);
 
+  /* Si no hay token reedirige al login. */
+  contexto.loginRedirect();
+
   //Hook navigate para reedirigir a otro lugar de la web.
   const navigate = useNavigate();
 

@@ -1,5 +1,6 @@
 import { createContext, useContext, useState } from 'react';
 import { obtenerDatos } from '../Biblioteca/Biblioteca';
+import { useNavigate } from 'react-router-dom';
 
 //Utilizamos un contexto para todos los estados que necesitemos por los diversos componentes.
 const datosContexto = createContext({
@@ -8,6 +9,7 @@ const datosContexto = createContext({
   setUser: () => { },
   setToken: () => { },
 });
+
 
 export const DatosProveedor = (props) => {
 
@@ -28,12 +30,16 @@ export const DatosProveedor = (props) => {
   const [user, setUser] = useState({});
   const [token, _setToken] = useState(localStorage.getItem('ACCESS_TOKEN'));
 
+  /* */
+  const navigate = useNavigate();
+
   //Obtenemos las pistas.
   const getPistas = async () => {
     let datos = await obtenerDatos(url);
     setPistas(datos);
   };
 
+  /* */
   const setToken = (token) => {
     _setToken(token)
     if (token) {
@@ -42,6 +48,13 @@ export const DatosProveedor = (props) => {
       localStorage.removeItem('ACCESS_TOKEN');
     }
   }
+
+  /* Si no hay token reedirige al login. */
+  const loginRedirect = () => {
+    if(!token){
+      navigate('/login');
+    }
+  };
 
   //Lo recogemos todo en el objeto.
   const datos = {
@@ -65,7 +78,9 @@ export const DatosProveedor = (props) => {
     user,
     setUser,
     token,
-    setToken
+    setToken,
+    navigate,
+    loginRedirect
   };
 
 

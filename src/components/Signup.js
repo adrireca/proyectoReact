@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, createRef } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -15,6 +15,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 // import axios from 'axios';
 import axiosClient from "../axios-client.js";
 import { datosContexto } from '../contextos/DatosProveedor';
+import { palette } from '../Biblioteca/Biblioteca.js';
 
 const theme = createTheme();
 
@@ -22,30 +23,47 @@ const theme = createTheme();
 export const Signup = () => {
 
   /* Estados de los datos del formulario. */
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
+  const [name, setFirstName] = useState('');
+  // const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [passwordConfirmation, setPasswordConfirmation] = useState('');
+
+  // const nameRef = createRef()
+  // const emailRef = createRef()
+  // const passwordRef = createRef();
+  // const passwordConfirmationRef = createRef();
 
   const contexto = useContext(datosContexto);
   const [errors, setErrors] = useState(null);
 
-  /* Modelo del login. */
-  const RegisterUserModel = {
-    firstName,
-    lastName,
-    email,
-    password
-  }
+  /* */
+  const redColor = palette.redColor;
 
-  const onSubmit = async (event) => {
+
+  const onSubmit = event => {
     event.preventDefault();
+
+    /* Modelo del signup. */
+    const RegisterUserModel = {
+      name: name,
+      // lastName,
+      email: email,
+      password: password,
+      password_confirmation: passwordConfirmation,
+    }
 
     /* Registra usuario. */
     axiosClient.post('/signup', RegisterUserModel)
       .then(({ data }) => {
         contexto.setUser(data.user)
         contexto.setToken(data.token);
+
+        /* Si tiene éxito el registro, reedirige a la home. */
+        if(data.user){
+          contexto.navigate('/');
+        }
+        
       })
       .catch(err => {
         const response = err.response;
@@ -53,12 +71,6 @@ export const Signup = () => {
           setErrors(response.data.errors)
         }
       })
-    // await axios.post('https://jsonplaceholder.typicode.com/users/', RegisterUserModel)
-    //             .then((response) => {
-
-    //             }).catch(err => {
-    //               console.log(err);
-    //             })
 
     console.log(RegisterUserModel);
 
@@ -84,39 +96,48 @@ export const Signup = () => {
             Registro
           </Typography>
           <Box component="form" noValidate onSubmit={onSubmit} sx={{ mt: 3 }}>
+            {/* Mensajes de error del formulario. */}
+            {errors &&
+              <Box className="alert">
+                {Object.keys(errors).map(key => (
+                  <Typography key={key} color={redColor} variant="body2" gutterBottom>{errors[key][0]}</Typography>
+                ))}
+              </Box>
+            }
             <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12} sm={12}>
                 <TextField
                   type='text'
+                  // ref={nameRef}
                   onChange={(e) => { setFirstName(e.target.value) }}
                   autoComplete="given-name"
-                  name="firstName"
+                  // name="name"
                   required
                   fullWidth
-                  id="firstName"
+                  // id="firstName"
                   label="Nombre"
                   autoFocus
                 />
               </Grid>
-              <Grid item xs={12} sm={6}>
+              {/* <Grid item xs={12} sm={6}>
                 <TextField
                   type='text'
                   onChange={(e) => { setLastName(e.target.value) }}
-                  required
                   fullWidth
                   id="lastName"
                   label="Apellidos"
                   name="lastName"
                   autoComplete="family-name"
                 />
-              </Grid>
+              </Grid> */}
               <Grid item xs={12}>
                 <TextField
                   type='email'
+                  // ref={emailRef}
                   onChange={(e) => { setEmail(e.target.value) }}
                   required
                   fullWidth
-                  id="email"
+                  // id="email"
                   label="Email"
                   name="email"
                   autoComplete="email"
@@ -125,21 +146,35 @@ export const Signup = () => {
               <Grid item xs={12}>
                 <TextField
                   type='password'
+                  // ref={passwordRef}
                   onChange={(e) => { setPassword(e.target.value) }}
                   required
                   fullWidth
                   name="password"
                   label="Contraseña"
-                  id="password"
+                  // id="password"
                   autoComplete="new-password"
                 />
               </Grid>
               <Grid item xs={12}>
+                <TextField
+                  type='password'
+                  // ref={passwordConfirmationRef}
+                  onChange={(e) => { setPasswordConfirmation(e.target.value) }}
+                  required
+                  fullWidth
+                  name="passwordConfirmation"
+                  label="Repite la contraseña"
+                  // id="passwordConfirmation"
+                  autoComplete="repeat-password"
+                />
+              </Grid>
+              {/* <Grid item xs={12}>
                 <FormControlLabel
                   control={<Checkbox value="allowExtraEmails" color="primary" />}
                   label="Quiero recibir inspiración, promociones de marketing y actualizaciones por correo electrónico."
                 />
-              </Grid>
+              </Grid> */}
             </Grid>
             <Button
               type="submit"

@@ -15,7 +15,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { datosContexto } from '../contextos/DatosProveedor';
-// import { useForm } from './useForm';
+import { palette } from '../Biblioteca/Biblioteca.js';
 
 const theme = createTheme();
 
@@ -27,30 +27,33 @@ export const Signin = () => {
 
   //Importa los datos del contexto.
   const contexto = useContext(datosContexto);
+  
   const [message, setMessage] = useState(null);
+  // const [errors, setErrors] = useState(null);
 
-  /* Modelo del login. */
-  const LoginModel = {
-    email,
-    password
-  }
+  /* */
+  const redColor = palette.redColor;
 
   /* Recoge los datos del formulario. */
-  const onSubmit = async (event) => {
+  const onSubmit = event => {
     event.preventDefault();
 
-    /* Guarda login. */
-    // await axios.post('https://jsonplaceholder.typicode.com/users/', LoginModel)
-    //             .then((response) => {
-
-    //             }).catch(err => {
-    //               console.log(err);
-    //             });
+    /* Modelo del login. */
+    const LoginModel = {
+      email: email,
+      password: password,
+    }
 
     axiosClient.post('/login', LoginModel)
       .then(({ data }) => {
         contexto.setUser(data.user)
         contexto.setToken(data.token);
+
+        /* Si tiene éxito el login, reedirige a la home. */
+        if (data.user) {
+          contexto.navigate('/');
+        }
+
       })
       .catch((err) => {
         const response = err.response;
@@ -60,12 +63,6 @@ export const Signin = () => {
       })
 
     console.log(LoginModel);
-
-    // const data = new FormData(event.currentTarget);
-    // console.log({
-    //   email: data.get('email'),
-    //   password: data.get('password'),
-    // });
 
   };
 
@@ -89,15 +86,21 @@ export const Signin = () => {
             Iniciar sesión
           </Typography>
           <Box component="form" onSubmit={onSubmit} noValidate sx={{ mt: 1 }}>
+            {/* Mensajes de error del formulario. */}
+            {message &&
+              <Box className="alert">
+                <Typography color={redColor} variant="body2" gutterBottom>{message}</Typography>
+              </Box>
+            }
             <TextField
               type='email'
               onChange={(e) => setEmail(e.target.value)}
               margin="normal"
               required
               fullWidth
-              id="email"
+              // id="email"
               label="Email"
-              name="email"
+              // name="email"
               autoComplete="email"
               autoFocus
             />
@@ -107,9 +110,9 @@ export const Signin = () => {
               margin="normal"
               required
               fullWidth
-              name="password"
+              // name="password"
               label="Contraseña"
-              id="password"
+              // id="password"
               autoComplete="current-password"
             />
             <FormControlLabel

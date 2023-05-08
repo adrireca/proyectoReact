@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { SobreNosotros } from "../layout/SobreNosotros";
 import { Heroe } from "../layout/Heroe";
 import { Servicios } from "../layout/Servicios";
@@ -7,6 +7,7 @@ import { Footer } from "../layout/Footer";
 import { Titulo } from "../layout/Titulo";
 
 export const Inicio = () => {
+
   return (
     //Plantilla de la home con los componentes necesarios.
     <React.Fragment>

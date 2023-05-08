@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useContext } from 'react';
 import { Outlet, Link, NavLink } from "react-router-dom";
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -11,12 +11,16 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-// import AdbIcon from '@mui/icons-material/Adb';
+import { datosContexto } from '../contextos/DatosProveedor';
+import axiosClient from "../axios-client.js";
 
 export const Nav = () => {
     const [anchorElUser, setAnchorElUser] = React.useState(null);
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
+
+    //Importa los datos del contexto.
+    const contexto = useContext(datosContexto);
 
     const handleOpenUserMenu = (event) => {
         setAnchorElUser(event.currentTarget);
@@ -33,6 +37,18 @@ export const Nav = () => {
         setAnchorEl(null);
     };
 
+    const onLogoutClick = event => {
+        event.preventDefault()
+
+        axiosClient.post('/logout')
+            .then(() => {
+                contexto.setUser({})
+                contexto.setToken(null)
+
+                contexto.navigate('/login');
+            })
+    }
+
     return (
         <>
 
@@ -47,9 +63,9 @@ export const Nav = () => {
                         </div>
 
                         {/* Menú barra navegación. */}
-                        <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, justifyContent:'end', marginRight: '15px', alignItems: 'center' }}>
-                            
-                                {/* <Button
+                        <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, justifyContent: 'end', marginRight: '15px', alignItems: 'center' }}>
+
+                            {/* <Button
                                     id="basic-button"
                                     aria-controls={open ? 'basic-menu' : undefined}
                                     aria-haspopup="true"
@@ -73,20 +89,25 @@ export const Nav = () => {
                                     <MenuItem onClick={handleClose}>Fútbol</MenuItem>
                                     <MenuItem onClick={handleClose}>Fútbol sala</MenuItem>
                                 </Menu> */}
-                            
+
                             {/* Detecta si se ha pulsado el enlace. Si es así, se le añade un estilo. */}
-                            <NavLink to={'/pistas'} className={({isActive}) => isActive ? 'enlaces activado' : 'enlaces'}>
+                            <NavLink to={'/pistas'} className={({ isActive }) => isActive ? 'enlaces activado' : 'enlaces'}>
                                 Pistas
                             </NavLink>
-                            <NavLink to={'/crear-pista'} className={({isActive}) => isActive ? 'enlaces activado' : 'enlaces'}>
+                            <NavLink to={'/crear-pista'} className={({ isActive }) => isActive ? 'enlaces activado' : 'enlaces'}>
                                 Crear Pista
                             </NavLink>
-                            <NavLink to={'/reservas'} className={({isActive}) => isActive ? 'enlaces activado' : 'enlaces'}>
+                            <NavLink to={'/reservas'} className={({ isActive }) => isActive ? 'enlaces activado' : 'enlaces'}>
                                 Reservas
                             </NavLink>
-                            <NavLink to={'/contacto'} className={({isActive}) => isActive ? 'enlaces activado' : 'enlaces'}>
+                            <NavLink to={'/contacto'} className={({ isActive }) => isActive ? 'enlaces activado' : 'enlaces'}>
                                 Contacto
                             </NavLink>
+                            {contexto.token &&
+                                <NavLink onClick={onLogoutClick} className={({ isActive }) => isActive ? 'enlaces activado' : 'enlaces'}>
+                                    Logout
+                                </NavLink>
+                            }
                         </Box>
 
                         <Box sx={{ flexGrow: 0 }}>
