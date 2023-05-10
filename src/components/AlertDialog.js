@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -7,40 +7,49 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
 export default function AlertDialog() {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
 
-  const handleClickOpen = () => {
+  const onDialogOpenClick = () => {
     setOpen(true);
   };
 
-  const handleClose = () => {
+  /* */
+  const onDeleteClick = (e) => {
+    setOpen(false);
+
+    console.log(e.target.id);
+
+  };
+
+  const onCancelClick = () => {
     setOpen(false);
   };
 
   return (
     <div>
-      <Button variant="outlined" onClick={handleClickOpen}>
-        Open alert dialog
+      <Button size="small" onClick={onDialogOpenClick}>
+        Eliminar
       </Button>
       <Dialog
         open={open}
-        onClose={handleClose}
+        onClose={onCancelClick}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
+        // className='divAlertDialog'
       >
-        <DialogTitle id="alert-dialog-title">
-          {"Use Google's location service?"}
+        <DialogTitle id="alert-dialog-title" sx={{ textAlign: 'center' }}>
+          {"¿Estás seguro?"}
         </DialogTitle>
-        <DialogContent>
+        {/* <DialogContent>
           <DialogContentText id="alert-dialog-description">
             Let Google help apps determine location. This means sending anonymous
             location data to Google, even when no apps are running.
           </DialogContentText>
-        </DialogContent>
+        </DialogContent> */}
         <DialogActions>
-          <Button onClick={handleClose}>Disagree</Button>
-          <Button onClick={handleClose} autoFocus>
-            Agree
+          <Button onClick={onCancelClick}>Cancelar</Button>
+          <Button onClick={(e) => onDeleteClick(e)} autoFocus>
+            Confirmar
           </Button>
         </DialogActions>
       </Dialog>

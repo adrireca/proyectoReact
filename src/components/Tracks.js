@@ -15,6 +15,7 @@ import { red } from '@mui/material/colors';
 import { green } from '@mui/material/colors';
 import { Box } from '@mui/material';
 import { Link } from 'react-router-dom';
+import AlertDialog from './AlertDialog';
 
 /* Colores personalizados. */
 const redColor = red[500];
@@ -31,10 +32,11 @@ export const Tracks = () => {
     /* Si no hay token reedirige al login. */
     contexto.loginRedirect();
 
-    const borrar = ((e) => {
-        var data = '';
+    /* Elimina una pista. */
+    const onDeleteClick = (e) => {
+        let data = '';
 
-        ////Preparamos el objeto con los datos, la url a la api y la petición.
+        /* Datos la petición. */
         var config = {
             method: 'delete',
             maxBodyLength: Infinity,
@@ -43,7 +45,12 @@ export const Tracks = () => {
             data: data
         };
 
-        //Petición delete con axios.
+        /* Solo elimina si confirma el usuario. */
+        if (!window.confirm('¿Estás seguro?')) {
+            return
+        }
+
+        /* Petición delete. */
         axios(config)
             .then(function (response) {
                 console.log(JSON.stringify(response.data));
@@ -51,7 +58,9 @@ export const Tracks = () => {
             .catch(function (error) {
                 console.log(error);
             });
-    });
+
+        /* añadir snackbar '¡Eliminada correctamente!' */
+    }
 
 
     //Muestra las pistas al cargar la página.
@@ -130,7 +139,7 @@ export const Tracks = () => {
                                                 }
                                                 <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
                                                     <Typography variant="body2" >{p.precioPista}€ / hora</Typography>
-                                                    
+
                                                     {p.disponible === 1 ?
                                                         <Typography variant="body2" color={greenColor} >Disponible</Typography>
                                                         :
@@ -141,7 +150,8 @@ export const Tracks = () => {
                                             </CardContent>
                                             <CardActions>
                                                 <Link to='/editar-pista' ><Button onClick={() => contexto.setId(p.id)} size="small">Editar</Button></Link>
-                                                <Button id={p.id} onClick={(e) => borrar(e)} size="small">Eliminar</Button>
+                                                <Button id={p.id} onClick={(e) => onDeleteClick(e)} size="small">Eliminar</Button>
+                                                {/* <AlertDialog /> */}
                                             </CardActions>
                                         </Card>
                                     </Grid>
