@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Outlet, Link, NavLink } from "react-router-dom";
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -20,13 +20,13 @@ export const Nav = () => {
     const open = Boolean(anchorEl);
 
     //Importa los datos del contexto.
-    const contexto = useContext(datosContexto);
+    const c = useContext(datosContexto);
 
-    const handleOpenUserMenu = (event) => {
+    const onOpenMenuClick = (event) => {
         setAnchorElUser(event.currentTarget);
     };
 
-    const handleCloseUserMenu = () => {
+    const onCloseMenuClick = () => {
         setAnchorElUser(null);
     };
 
@@ -42,10 +42,10 @@ export const Nav = () => {
 
         axiosClient.post('/logout')
             .then(() => {
-                contexto.setUser({})
-                contexto.setToken(null)
+                c.setUser({})
+                c.setToken(null)
 
-                contexto.navigate('/login');
+                c.navigate('/login');
             })
     }
 
@@ -103,16 +103,16 @@ export const Nav = () => {
                             <NavLink to={'/contacto'} className={({ isActive }) => isActive ? 'enlaces activado' : 'enlaces'}>
                                 Contacto
                             </NavLink>
-                            {contexto.token &&
-                                <NavLink onClick={onLogoutClick} className={({ isActive }) => isActive ? 'enlaces activado' : 'enlaces'}>
-                                    Logout
+                            {c.token &&
+                                <NavLink onClick={onLogoutClick} id='logoutLink' className={({ isActive }) => isActive ? 'enlaces activado' : 'enlaces'}>
+                                    Cerrar sesión
                                 </NavLink>
                             }
                         </Box>
 
                         <Box sx={{ flexGrow: 0 }}>
                             <Tooltip title="Identificarse">
-                                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }} className='btnUserNav'>
+                                <IconButton onClick={onOpenMenuClick} sx={{ p: 0 }} className='btnUserNav'>
                                     <AccountCircleIcon />
                                 </IconButton>
                             </Tooltip>
@@ -130,25 +130,41 @@ export const Nav = () => {
                                     horizontal: 'right',
                                 }}
                                 open={Boolean(anchorElUser)}
-                                onClose={handleCloseUserMenu}
+                                onClose={onCloseMenuClick}
                             >
                                 {/* Menu usuario. */}
-                                <Link to="/login" className='linkBtnUser'>
-                                    <MenuItem onClick={handleCloseUserMenu}>
-                                        <Typography textAlign="center">Inicia sesión</Typography>
-                                    </MenuItem>
-                                </Link>
-                                <Link to="/signup" className='linkBtnUser'>
-                                    <MenuItem onClick={handleCloseUserMenu}>
-                                        <Typography textAlign="center">Regístrate</Typography>
-                                    </MenuItem>
-                                </Link>
+                                {c.token ?
+                                    <div>
+                                        <Link to="/users" className='linkBtnUser'>
+                                            <MenuItem onClick={onCloseMenuClick}>
+                                                <Typography textAlign="center">Administrar usuarios</Typography>
+                                            </MenuItem>
+                                        </Link>
+                                        <Link to="/signup" className='linkBtnUser'>
+                                            <MenuItem onClick={onCloseMenuClick}>
+                                                <Typography textAlign="center">Regístrate</Typography>
+                                            </MenuItem>
+                                        </Link>
+                                    </div>
+                                    :
+                                    <div>
+                                        <Link to="/login" className='linkBtnUser'>
+                                            <MenuItem onClick={onCloseMenuClick}>
+                                                <Typography textAlign="center">Inicia sesión</Typography>
+                                            </MenuItem>
+                                        </Link>
+                                        <Link to="/signup" className='linkBtnUser'>
+                                            <MenuItem onClick={onCloseMenuClick}>
+                                                <Typography textAlign="center">Regístrate</Typography>
+                                            </MenuItem>
+                                        </Link>
+                                    </div>
+                                }
                             </Menu>
                         </Box>
                     </Toolbar>
                 </Container>
             </AppBar>
-
 
             <Outlet />
         </>

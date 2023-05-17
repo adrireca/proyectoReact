@@ -3,8 +3,8 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
+// import FormControlLabel from '@mui/material/FormControlLabel';
+// import Checkbox from '@mui/material/Checkbox';
 import { Link } from "react-router-dom";
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
@@ -34,7 +34,7 @@ export const Signup = () => {
   // const passwordRef = createRef();
   // const passwordConfirmationRef = createRef();
 
-  const contexto = useContext(datosContexto);
+  const c = useContext(datosContexto);
   const [errors, setErrors] = useState(null);
 
   /* */
@@ -56,12 +56,12 @@ export const Signup = () => {
     /* Registra usuario. */
     axiosClient.post('/signup', RegisterUserModel)
       .then(({ data }) => {
-        contexto.setUser(data.user)
-        contexto.setToken(data.token);
+        c.setUser(data.user)
+        c.setToken(data.token);
 
         /* Si tiene éxito el registro, reedirige a la home. */
         if(data.user){
-          contexto.navigate('/');
+          c.navigate('/');
         }
         
       })

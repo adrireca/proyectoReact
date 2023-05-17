@@ -53,8 +53,13 @@
   color: #fff !important;
   transition: all 300ms;
 }
+
 .activado{
   color: #94aaff !important;
+}
+
+#logoutLink {
+  font-size: 0.6em;
 }
 
 .btnUserNav {
@@ -213,6 +218,20 @@ header .logo_header img {
 /* Landing pistas. */
 .divTracks {
   padding-top: 170px;
+}
+
+
+
+
+
+/* Landing usuarios. */
+.divUsers {
+  padding-top: 170px !important;
+}
+
+.divUsers .btnNewUser {
+  display: block;
+  text-align: end;
 }
 
 

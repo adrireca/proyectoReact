@@ -26,7 +26,7 @@ export const Signin = () => {
   const [password, setPassword] = useState('');
 
   //Importa los datos del contexto.
-  const contexto = useContext(datosContexto);
+  const c = useContext(datosContexto);
   
   const [message, setMessage] = useState(null);
   // const [errors, setErrors] = useState(null);
@@ -46,12 +46,12 @@ export const Signin = () => {
 
     axiosClient.post('/login', LoginModel)
       .then(({ data }) => {
-        contexto.setUser(data.user)
-        contexto.setToken(data.token);
+        c.setUser(data.user)
+        c.setToken(data.token);
 
         /* Si tiene éxito el login, reedirige a la home. */
         if (data.user) {
-          contexto.navigate('/');
+          c.navigate('/');
         }
 
       })

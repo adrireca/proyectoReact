@@ -15,7 +15,12 @@ import { red } from '@mui/material/colors';
 import { green } from '@mui/material/colors';
 import { Box } from '@mui/material';
 import { Link } from 'react-router-dom';
-import AlertDialog from './AlertDialog';
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
+
+const Alert = React.forwardRef(function Alert(props, ref) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 /* Colores personalizados. */
 const redColor = red[500];
@@ -26,11 +31,22 @@ const theme = createTheme();
 
 export const Tracks = () => {
 
+    /* */
+    const [open, setOpen] = React.useState(false);
+
+    const onCloseClick = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        setOpen(false);
+    };
+
     /* Obtenemos todos los datos del contexto. */
-    const contexto = useContext(datosContexto);
+    const c = useContext(datosContexto);
 
     /* Si no hay token reedirige al login. */
-    contexto.loginRedirect();
+    c.loginRedirect();
 
     /* Elimina una pista. */
     const onDeleteClick = (e) => {
@@ -40,7 +56,7 @@ export const Tracks = () => {
         var config = {
             method: 'delete',
             maxBodyLength: Infinity,
-            url: `http://localhost:8090/api/pistas/${e.target.id}`,
+            url: `${c.url}/${e.target.id}`,
             headers: {},
             data: data
         };
@@ -54,18 +70,22 @@ export const Tracks = () => {
         axios(config)
             .then(function (response) {
                 console.log(JSON.stringify(response.data));
+
+                /* Al eliminar una pista vuelve a cargar las pistas. */
+                c.getPistas();
             })
             .catch(function (error) {
                 console.log(error);
             });
 
-        /* añadir snackbar '¡Eliminada correctamente!' */
+        /* Al eliminar una pista muestra snackbar de confirmación. */
+        setOpen(true);
     }
 
 
     //Muestra las pistas al cargar la página.
     useEffect(() => {
-        contexto.getPistas();
+        c.getPistas();
     }, []);
 
     return (
@@ -89,8 +109,8 @@ export const Tracks = () => {
                 <Container sx={{ py: 8 }} maxWidth="lg">
                     <Grid container spacing={4}>
                         {/* Se recorre y se comprueba si existen o no pistas. */}
-                        {contexto.pistas.pistas ?
-                            contexto.pistas.pistas.map((p, i) => {
+                        {c.pistas.pistas ?
+                            c.pistas.pistas.map((p, i) => {
                                 return (
                                     <Grid item key={i} xs={12} sm={6} md={4}>
                                         <Card
@@ -149,7 +169,7 @@ export const Tracks = () => {
 
                                             </CardContent>
                                             <CardActions>
-                                                <Link to='/editar-pista' ><Button onClick={() => contexto.setId(p.id)} size="small">Editar</Button></Link>
+                                                <Link to='/editar-pista' ><Button onClick={() => c.setId(p.id)} size="small">Editar</Button></Link>
                                                 <Button id={p.id} onClick={(e) => onDeleteClick(e)} size="small">Eliminar</Button>
                                                 {/* <AlertDialog /> */}
                                             </CardActions>
@@ -160,38 +180,16 @@ export const Tracks = () => {
 
                             : ''}
 
-                        {/* {cards.map((card) => (
-                            <Grid item key={card} xs={12} sm={6} md={4}>
-                                <Card
-                                    sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
-                                >
-                                    <CardMedia
-                                        component="img"
-                                        sx={{
-                                            // 16:9
-                                            pt: '56.25%',
-                                        }}
-                                        image="https://source.unsplash.com/random"
-                                        alt="random"
-                                    />
-                                    <CardContent sx={{ flexGrow: 1 }}>
-                                        <Typography gutterBottom variant="h5" component="h2">
-                                            Heading
-                                        </Typography>
-                                        <Typography>
-                                            This is a media card. You can use this section to describe the
-                                            content.
-                                        </Typography>
-                                    </CardContent>
-                                    <CardActions>
-                                        <Button size="small">View</Button>
-                                        <Button size="small">Edit</Button>
-                                    </CardActions>
-                                </Card>
-                            </Grid>
-                        ))} */}
                     </Grid>
                 </Container>
+
+                {/* Snackbar de confirmación. */}
+                <Snackbar open={open} autoHideDuration={6000} onClose={onCloseClick}>
+                    <Alert onClose={onCloseClick} severity="success" sx={{ width: '100%' }}>
+                        Pista eliminada con éxito.
+                    </Alert>
+                </Snackbar>
+
             </main>
         </ThemeProvider>
     )

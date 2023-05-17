@@ -1,7 +1,8 @@
 import axios from "axios";
 
 const axiosClient = axios.create({
-    baseURL: `http://localhost:8090/api`
+    /* Empresa port:80, Casa port:8090. */
+    baseURL: `http://localhost:80/api`
 })
 
 axiosClient.interceptors.request.use((config) => {

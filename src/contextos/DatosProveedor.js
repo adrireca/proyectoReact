@@ -13,8 +13,9 @@ const datosContexto = createContext({
 
 export const DatosProveedor = (props) => {
 
-  //Url de la api.
-  const url = "http://localhost:8090/api/pistas";
+  /* Url de la api. */
+  /* Empresa port:80, Casa port:8090. */
+  const url = "http://localhost:80/api/pistas";
   const valorInicial = [];
 
   /* Estados que utilizamos para recoger y actualizar los datos de los formularios. */
