@@ -1,8 +1,7 @@
 import React, { useContext } from 'react';
-import { datosContexto } from '../contextos/DatosProveedor';
+import { contextData } from '../context/ContextProvider';
 import axios from 'axios';
 import { Exito } from '../Exito/Exito';
-
 // import Avatar from '@mui/material/Avatar';
 // import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -27,7 +26,7 @@ import Select from '@mui/material/Select';
 export const CrearPista = () => {
 
     /* Importa los datos del contexto. */
-    const c = useContext(datosContexto);
+    const c = useContext(contextData);
 
     /* Si no hay token reedirige al login. */
     c.loginRedirect();

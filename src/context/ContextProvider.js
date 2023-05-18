@@ -1,9 +1,9 @@
 import { createContext, useContext, useState } from 'react';
-import { obtenerDatos } from '../Biblioteca/Biblioteca';
+import { obtenerDatos } from '../library/Library';
 import { useNavigate } from 'react-router-dom';
 
 //Utilizamos un contexto para todos los estados que necesitemos por los diversos componentes.
-const datosContexto = createContext({
+const contextProvider = createContext({
   currentUser: null,
   token: null,
   setUser: () => { },
@@ -11,7 +11,7 @@ const datosContexto = createContext({
 });
 
 
-export const DatosProveedor = (props) => {
+export const ContextProvider = (props) => {
 
   /* Url de la api. */
   /* Empresa port:80, Casa port:8090. */
@@ -87,11 +87,11 @@ export const DatosProveedor = (props) => {
 
   return (
     //Proveemos de los datos a los componentes hijo.
-    <datosContexto.Provider value={datos}>
+    <contextProvider.Provider value={datos}>
       {props.children}
-    </datosContexto.Provider>
+    </contextProvider.Provider>
   )
 }
 
 // export const useStateContext = () => useContext(datosContexto);
-export { datosContexto }
+export { contextProvider as contextData }

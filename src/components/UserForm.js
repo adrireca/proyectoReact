@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { datosContexto } from '../contextos/DatosProveedor';
+import { contextData } from '../context/ContextProvider';
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axiosClient from "../axios-client.js";
@@ -15,7 +15,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { palette } from '../Biblioteca/Biblioteca.js';
+import { palette } from '../library/Library.js';
 
 const theme = createTheme();
 
@@ -23,7 +23,7 @@ export const UserForm = () => {
     /* Utiliza los parámetros de la ruta padre. */
     let { id } = useParams();
     /* Datos del contexto. */
-    const c = useContext(datosContexto);
+    const c = useContext(contextData);
     const [user, setUser] = useState({
         id: null,
         name: '',

@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react'
-import { datosContexto } from '../contextos/DatosProveedor';
+import { contextData } from '../context/ContextProvider';
 import axiosClient from '../axios-client';
 import Container from '@mui/material/Container';
 import { DataGrid } from '@mui/x-data-grid';
@@ -12,14 +12,14 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 // import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import { palette } from '../Biblioteca/Biblioteca.js';
+import { palette } from '../library/Library.js';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 
 export const Users = () => {
 
     /* Datos del contexto. */
-    const c = useContext(datosContexto);
+    const c = useContext(contextData);
     /* */
     const [errors, setErrors] = useState(null);
     /* */

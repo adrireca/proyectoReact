@@ -9,7 +9,7 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { datosContexto } from '../contextos/DatosProveedor';
+import { contextData } from '../context/ContextProvider';
 import axios from 'axios';
 import { red } from '@mui/material/colors';
 import { green } from '@mui/material/colors';
@@ -29,7 +29,7 @@ const greenColor = green[500];
 /* */
 const theme = createTheme();
 
-export const Tracks = () => {
+export const Courts = () => {
 
     /* */
     const [open, setOpen] = React.useState(false);
@@ -43,7 +43,7 @@ export const Tracks = () => {
     };
 
     /* Obtenemos todos los datos del contexto. */
-    const c = useContext(datosContexto);
+    const c = useContext(contextData);
 
     /* Si no hay token reedirige al login. */
     c.loginRedirect();

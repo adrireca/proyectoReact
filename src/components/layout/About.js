@@ -2,7 +2,7 @@ import { Button } from "@mui/material";
 import React from "react";
 import { Container } from "react-bootstrap";
 
-export const SobreNosotros = () => {
+export const About = () => {
   return (
     <React.Fragment>
 

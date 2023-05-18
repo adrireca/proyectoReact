@@ -14,8 +14,8 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { datosContexto } from '../contextos/DatosProveedor';
-import { palette } from '../Biblioteca/Biblioteca.js';
+import { contextData } from '../context/ContextProvider';
+import { palette } from '../library/Library.js';
 
 const theme = createTheme();
 
@@ -26,7 +26,7 @@ export const Signin = () => {
   const [password, setPassword] = useState('');
 
   //Importa los datos del contexto.
-  const c = useContext(datosContexto);
+  const c = useContext(contextData);
   
   const [message, setMessage] = useState(null);
   // const [errors, setErrors] = useState(null);

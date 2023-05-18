@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { datosContexto } from '../contextos/DatosProveedor';
+import { contextData } from '../context/ContextProvider';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
 import Button from '@mui/material/Button';
@@ -7,7 +7,7 @@ import Button from '@mui/material/Button';
 export const Exito = () => {
 
     //Obtenemos todos los datos del contexto.
-    const c = useContext(datosContexto);
+    const c = useContext(contextData);
 
     /* */
     const [open, setOpen] = React.useState(false);

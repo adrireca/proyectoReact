@@ -11,7 +11,7 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import { datosContexto } from '../contextos/DatosProveedor';
+import { contextData } from '../context/ContextProvider';
 import axiosClient from "../axios-client.js";
 
 export const Nav = () => {
@@ -20,7 +20,7 @@ export const Nav = () => {
     const open = Boolean(anchorEl);
 
     //Importa los datos del contexto.
-    const c = useContext(datosContexto);
+    const c = useContext(contextData);
 
     const onOpenMenuClick = (event) => {
         setAnchorElUser(event.currentTarget);

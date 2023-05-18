@@ -1,7 +1,7 @@
 import React from "react";
 import Carousel from 'react-bootstrap/Carousel';
 
-export const Titulo = () => {
+export const HeaderCarousel = () => {
   return (
     <React.Fragment>
       <div className="divSlider carousel-inner fondo-titulo">

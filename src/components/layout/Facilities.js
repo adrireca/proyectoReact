@@ -4,7 +4,7 @@ import Card from 'react-bootstrap/Card';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 
-export const Instalaciones = () => {
+export const Facilities = () => {
   return (
     <React.Fragment>
 

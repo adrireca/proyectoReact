@@ -3,7 +3,7 @@ import React from "react";
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { Link } from "react-router-dom";
 
-export const Heroe = () => {
+export const CallToAction = () => {
   return (
     <React.Fragment>
       <div className="divHeroe text-secondary px-4 py-5 text-center">

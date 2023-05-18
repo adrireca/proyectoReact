@@ -14,8 +14,8 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 // import axios from 'axios';
 import axiosClient from "../axios-client.js";
-import { datosContexto } from '../contextos/DatosProveedor';
-import { palette } from '../Biblioteca/Biblioteca.js';
+import { contextData } from '../context/ContextProvider';
+import { palette } from '../library/Library.js';
 
 const theme = createTheme();
 
@@ -34,7 +34,7 @@ export const Signup = () => {
   // const passwordRef = createRef();
   // const passwordConfirmationRef = createRef();
 
-  const c = useContext(datosContexto);
+  const c = useContext(contextData);
   const [errors, setErrors] = useState(null);
 
   /* */

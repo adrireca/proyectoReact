@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { datosContexto } from '../contextos/DatosProveedor';
+import { contextData } from '../context/ContextProvider';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { Exito } from '../Exito/Exito';
@@ -25,7 +25,7 @@ import Select from '@mui/material/Select';
 export const EditarPista = () => {
 
   //Obtenemos todos los datos del contexto.
-  const contexto = useContext(datosContexto);
+  const contexto = useContext(contextData);
 
   /* Si no hay token reedirige al login. */
   contexto.loginRedirect();

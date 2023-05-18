@@ -1,17 +1,17 @@
 import React from "react";
 import "./App.css";
-import { DatosProveedor } from "./contextos/DatosProveedor";
-import { Pistas } from "./Pistas/Pistas";
+import { ContextProvider } from "./context/ContextProvider";
+// import { Pistas } from "./Pistas/Pistas";
 import { Routes, Route } from "react-router-dom";
 import { CrearPista } from "./CrearPista/CrearPista";
-import { Inicio } from "./Inicio/Inicio";
+import { IndexTemplate } from "./components/layout/IndexTemplate";
 import { EditarPista } from "./EditarPista/EditarPista";
 import { Nav } from "./components/Nav";
 import { NoPage } from './components/NoPage';
 import { Signin } from "./components/Signin";
 import { Signup } from "./components/Signup";
 import { Contact } from "./components/Contact";
-import { Tracks } from "./components/Tracks";
+import { Courts } from "./components/Courts";
 import { Users } from "./components/Users";
 import { UserForm } from "./components/UserForm";
 // import { UserForm } from "./components/UserForm";
@@ -21,12 +21,12 @@ import { UserForm } from "./components/UserForm";
 function App() {
   return (
     <React.Fragment>
-      <DatosProveedor>
+      <ContextProvider>
         {/* Rutas de navegación. */}
         <Routes>
           <Route path="/" element={<Nav />}>
-            <Route index element={<Inicio />} />
-            <Route path="/pistas" element={<Tracks />} />
+            <Route index element={<IndexTemplate />} />
+            <Route path="/pistas" element={<Courts />} />
             {/* <Route path="/pistas" element={<Pistas />} /> */}
             <Route path="/crear-pista" element={<CrearPista />} />
             <Route path="/editar-pista" element={<EditarPista />} />
@@ -40,7 +40,7 @@ function App() {
             <Route path='*' element={<NoPage />} />
           </Route>
         </Routes>
-      </DatosProveedor>
+      </ContextProvider>
     </React.Fragment>
   );
 }

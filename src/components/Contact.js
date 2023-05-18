@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -12,10 +12,9 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-// import { transporter } from '../nodemailer-service';
-// import axios from 'axios';
-// import axiosClient from "../axios-client.js";
-// import { useStateContext } from "../context/ContextProvider.jsx";
+import axiosClient from "../axios-client.js";
+import { contextData } from '../context/ContextProvider';
+import { palette } from '../library/Library.js';
 
 const theme = createTheme();
 
@@ -28,35 +27,45 @@ export const Contact = () => {
     const [message, setMessage] = useState('');
 
     // const { setUser, setToken } = useStateContext();
-    // const [errors, setErrors] = React.useState(null);
+    const [errors, setErrors] = useState(null);
 
-    /* Modelo del login. */
-    const RegisterUserModel = {
-        firstName,
-        lastName,
-        email,
-        phone,
-        message
-    }
+    /* */
+    const c = useContext(contextData);
 
+    /* */
+    const redColor = palette.redColor;
+
+    /* */
     const onSubmit = async (event) => {
         event.preventDefault();
 
-        console.log(RegisterUserModel);
+        /* Modelo del formulario de contacto. */
+        const RegisterContactModel = {
+            firstName: firstName,
+            lastName: lastName,
+            email: email,
+            phone: phone,
+            message: message,
+        }
 
-        // try {
-        //     // send mail with defined transport object
-        //     await transporter.sendMail({
-        //         from: '"Fred Foo 👻" <foo@example.com>', // sender address
-        //         to: "bar@example.com, baz@example.com", // list of receivers
-        //         subject: "Hello ✔", // Subject line
-        //         text: "Hello world?", // plain text body
-        //         html: "<b>Hello world?</b>", // html body
-        //     });
+        console.log(RegisterContactModel);
 
-        // } catch (error) {
-        //     console.log(error.message());
-        // }
+        /* */
+        axiosClient.post('/contact', RegisterContactModel)
+            .then(({ data }) => {
+                console.log(data);
+
+                /* Reedirige a la home. */
+                c.navigate('/');
+
+            })
+            .catch(err => {
+                const response = err.response;
+                if (response && response.status === 422) {
+                    setErrors(response.data.errors)
+                }
+            })
+
     };
 
 
@@ -80,6 +89,14 @@ export const Contact = () => {
                         Contacta con nosotros
                     </Typography>
                     <Box component="form" noValidate onSubmit={onSubmit} sx={{ mt: 3 }}>
+                        {/* Mensajes de error del formulario. */}
+                        {errors &&
+                            <Box className="alert">
+                                {Object.keys(errors).map(key => (
+                                    <Typography key={key} color={redColor} variant="body2" gutterBottom>{errors[key][0]}</Typography>
+                                ))}
+                            </Box>
+                        }
                         <Grid container spacing={2}>
                             <Grid item xs={12} sm={6}>
                                 <TextField
@@ -89,7 +106,6 @@ export const Contact = () => {
                                     name="name"
                                     required
                                     fullWidth
-                                    id="name"
                                     label="Nombre"
                                     autoFocus
                                 />
@@ -98,9 +114,7 @@ export const Contact = () => {
                                 <TextField
                                     type='text'
                                     onChange={(e) => { setLastName(e.target.value) }}
-                                    required
                                     fullWidth
-                                    id="last-name"
                                     label="Apellidos"
                                     name="last-name"
                                     autoComplete="family-name"
@@ -112,7 +126,6 @@ export const Contact = () => {
                                     onChange={(e) => { setEmail(e.target.value) }}
                                     required
                                     fullWidth
-                                    id="email"
                                     label="Email"
                                     name="email"
                                     autoComplete="email"
@@ -122,11 +135,9 @@ export const Contact = () => {
                                 <TextField
                                     type='tel'
                                     onChange={(e) => { setPhone(e.target.value) }}
-                                    required
                                     fullWidth
                                     name="tel"
                                     label="Teléfono"
-                                    id="phone"
                                     autoComplete="phone"
                                 />
                             </Grid>
@@ -138,7 +149,6 @@ export const Contact = () => {
                                     fullWidth
                                     name="message"
                                     label="Mensaje"
-                                    id="message"
                                     autoComplete="mensaje"
                                     multiline
                                     rows={4}

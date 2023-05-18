@@ -1,7 +1,7 @@
 import { Container } from "@mui/material";
 import React from "react";
 
-export const Servicios = () => {
+export const ServicesTemplate = () => {
 
   return (
     <React.Fragment>
