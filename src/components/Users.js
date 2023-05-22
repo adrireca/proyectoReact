@@ -156,7 +156,7 @@ export const Users = () => {
         <>
             <main>
                 <Container sx={{ py: 8 }} maxWidth="lg" className='divUsers'>
-                    <Link to={'/users/new'} className='btnNewUser' >
+                    <Link to={'/signup'} className='btnNewUser' >
                         <Button sx={{ mb: 1 }} variant='contained' size="small">New</Button>
                     </Link>
                     {users ?

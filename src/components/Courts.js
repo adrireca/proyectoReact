@@ -10,10 +10,11 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { contextData } from '../context/ContextProvider';
-import axios from 'axios';
+// import axios from 'axios';
+import axiosClient from '../axios-client';
 import { red } from '@mui/material/colors';
 import { green } from '@mui/material/colors';
-import { Box } from '@mui/material';
+import { Box, ButtonGroup } from '@mui/material';
 import { Link } from 'react-router-dom';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
@@ -49,38 +50,24 @@ export const Courts = () => {
     c.loginRedirect();
 
     /* Elimina una pista. */
-    const onDeleteClick = (e) => {
-        let data = '';
-
-        /* Datos la petición. */
-        var config = {
-            method: 'delete',
-            maxBodyLength: Infinity,
-            url: `${c.url}/${e.target.id}`,
-            headers: {},
-            data: data
-        };
-
+    const onDeleteClick = ((e) => {
         /* Solo elimina si confirma el usuario. */
         if (!window.confirm('¿Estás seguro?')) {
             return
         }
 
-        /* Petición delete. */
-        axios(config)
-            .then(function (response) {
-                console.log(JSON.stringify(response.data));
+        axiosClient.delete(`/pistas/${e.target.id}`)
+            .then(() => {
+                console.log('Pista eliminada correctamente.');
+
+                /* Al eliminar una pista muestra snackbar de confirmación. */
+                setOpen(true);
 
                 /* Al eliminar una pista vuelve a cargar las pistas. */
                 c.getPistas();
             })
-            .catch(function (error) {
-                console.log(error);
-            });
 
-        /* Al eliminar una pista muestra snackbar de confirmación. */
-        setOpen(true);
-    }
+    });
 
 
     //Muestra las pistas al cargar la página.
@@ -169,9 +156,12 @@ export const Courts = () => {
 
                                             </CardContent>
                                             <CardActions>
-                                                <Link to='/editar-pista' ><Button onClick={() => c.setId(p.id)} size="small">Editar</Button></Link>
-                                                <Button id={p.id} onClick={(e) => onDeleteClick(e)} size="small">Eliminar</Button>
-                                                {/* <AlertDialog /> */}
+                                                <ButtonGroup variant="text" size="small" aria-label="text button group">
+                                                <Link to={`/editar-pista/${p.id}`} ><Button>Editar</Button></Link>
+                                                    {/* <Link to='/editar-pista' ><Button onClick={() => c.setId(p.id)}>Editar</Button></Link> */}
+                                                    <Button id={p.id} onClick={(e) => onDeleteClick(e)} color='error'>Eliminar</Button>
+                                                    {/* <AlertDialog /> */}
+                                                </ButtonGroup>
                                             </CardActions>
                                         </Card>
                                     </Grid>

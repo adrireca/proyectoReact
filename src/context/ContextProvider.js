@@ -27,6 +27,16 @@ export const ContextProvider = (props) => {
   const [precioPista, setPrecioPista] = useState('');
   const [precioLuz, setPrecioLuz] = useState('');
   const [tipoPista, setTipoPista] = useState('');
+  /* Estado para editar pista. */
+  const [court, setCourt] = useState({
+    id: null,
+    luz: false,
+    cubierta: false,
+    disponible: false,
+    precioPista: 0,
+    precioLuz: 0,
+    tipoPista: ''
+  });
 
   const [user, setUser] = useState({});
   const [token, _setToken] = useState(localStorage.getItem('ACCESS_TOKEN'));
@@ -81,7 +91,9 @@ export const ContextProvider = (props) => {
     token,
     setToken,
     navigate,
-    loginRedirect
+    loginRedirect,
+    court,
+    setCourt
   };
 
 

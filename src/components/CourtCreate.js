@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { contextData } from '../context/ContextProvider';
-import axios from 'axios';
-import { Exito } from '../Exito/Exito';
+// import axios from 'axios';
+import { ConfirmCourtCreate } from '../snackbarConfirmations/ConfirmCourtCreate';
 // import Avatar from '@mui/material/Avatar';
 // import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -21,9 +21,11 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
+import axiosClient from "../axios-client.js";
+// import Button from '@mui/material/Button';
 
 
-export const CrearPista = () => {
+export const CourtCreate = () => {
 
     /* Importa los datos del contexto. */
     const c = useContext(contextData);
@@ -32,57 +34,41 @@ export const CrearPista = () => {
     c.loginRedirect();
 
     /* Guarda una pista */
-    const store = async (e) => {
+    const onSubmit = async (e) => {
         //Deshabilitamos el refresco al click del botón.
         e.preventDefault();
 
-        try {
-            /*
-            Dentro del checkbox, en caso de on asignamos 1 al estado.
-            De lo contrario, 0, que es lo que admite el campo boolean dentro la base de datos.
-            */
-            if (c.luz === 'on') {
-                c.luz = 1;
-            } else {
-                c.luz = 0;
-            }
-
-            if (c.disponible === 'on') {
-                c.disponible = 1;
-            } else {
-                c.disponible = 0;
-            }
-
-            if (c.cubierta === 'on') {
-                c.cubierta = 1;
-            } else {
-                c.cubierta = 0;
-            }
-
-            //Convertimos a float.
-            c.precioPista = parseFloat(c.precioPista);
-            c.precioLuz = parseFloat(c.precioLuz);
-
-            //Petición post con axios asignando cada estado a su campo correspondiente.
-            await axios.post(c.url, {
-                luz: c.luz,
-                tipoPista: c.tipoPista,
-                precioLuz: c.precioLuz,
-                cubierta: c.cubierta,
-                disponible: c.disponible,
-                precioPista: c.precioPista
-            })
-
-            //Reedirigimos a pistas al crear una pista.
-            c.navigate("/pistas");
-
-            //Vaciamos los campos del formulario.
-            c.setPrecioLuz('');
-            c.setPrecioPista('');
-        } catch (error) {
-            console.log(error.message());
+        const CourtCreateModel = {
+            luz: c.luz,
+            cubierta: c.cubierta,
+            disponible: c.disponible,
+            precioPista: c.precioPista,
+            precioLuz: c.precioLuz,
+            tipoPista: c.tipoPista,
         }
+
+        axiosClient.post('/pistas', CourtCreateModel)
+            .then(({ data }) => {
+                /* Vaciamos los campos del formulario. */
+                resetFormField();
+
+                /* Reedirige a pistas. */
+                c.navigate('/pistas');
+            })
+            .catch(err => {
+                console.log(err);
+            });
     };
+
+    /* Rsetea los campos del formulario. */
+    const resetFormField = () => {
+        c.setLuz(false);
+        c.setCubierta(false);
+        c.setDisponible(false);
+        c.setPrecioLuz(0);
+        c.setPrecioPista(0);
+        c.setTipoPista('');
+    }
 
 
     return (
@@ -103,7 +89,7 @@ export const CrearPista = () => {
                     <Typography component="h2" variant="h5" className='titleFormEditCreate' >
                         Introduce los datos de la pista:
                     </Typography>
-                    <Box component="form" onSubmit={store} noValidate sx={{ mt: 3 }}>
+                    <Box component="form" onSubmit={onSubmit} noValidate sx={{ mt: 3 }}>
                         <Grid container spacing={2}>
                             <Grid item xs={12}>
                                 <FormGroup>
@@ -111,21 +97,21 @@ export const CrearPista = () => {
                                         required
                                         control={<Switch />} label="La pista tiene luz"
                                         name='luz'
-                                        onChange={(e) => c.setLuz(e.target.value)}
+                                        onChange={(e) => c.setLuz(e.target.checked)}
                                     />
                                     <FormControlLabel
                                         required
                                         control={<Switch />}
                                         label="La pista está cubierta"
                                         name='cubierta'
-                                        onChange={(e) => c.setCubierta(e.target.value)}
+                                        onChange={(e) => c.setCubierta(e.target.checked)}
                                     />
                                     <FormControlLabel
                                         required
-                                        control={<Switch defaultChecked />}
+                                        control={<Switch />}
                                         label="La pista esta disponible"
                                         name='disponible'
-                                        onChange={(e) => c.setDisponible(e.target.value)}
+                                        onChange={(e) => c.setDisponible(e.target.checked)}
                                     />
                                 </FormGroup>
                             </Grid>
@@ -179,8 +165,8 @@ export const CrearPista = () => {
                                 </FormControl>
                             </Grid>
                         </Grid>
-                        {/* Contiene el botón de enviar y el mensaje de éxito. */}
-                        <Exito />
+                        {/* Contiene el botón de enviar y el mensaje de confirmación. */}
+                        <ConfirmCourtCreate />
                     </Box>
                 </Box>
             </Container>

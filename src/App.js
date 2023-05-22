@@ -3,9 +3,9 @@ import "./App.css";
 import { ContextProvider } from "./context/ContextProvider";
 // import { Pistas } from "./Pistas/Pistas";
 import { Routes, Route } from "react-router-dom";
-import { CrearPista } from "./CrearPista/CrearPista";
+import { CourtCreate } from "./components/CourtCreate";
 import { IndexTemplate } from "./components/layout/IndexTemplate";
-import { EditarPista } from "./EditarPista/EditarPista";
+import { CourtUpdate } from "./components/CourtUpdate";
 import { Nav } from "./components/Nav";
 import { NoPage } from './components/NoPage';
 import { Signin } from "./components/Signin";
@@ -28,15 +28,14 @@ function App() {
             <Route index element={<IndexTemplate />} />
             <Route path="/pistas" element={<Courts />} />
             {/* <Route path="/pistas" element={<Pistas />} /> */}
-            <Route path="/crear-pista" element={<CrearPista />} />
-            <Route path="/editar-pista" element={<EditarPista />} />
+            <Route path="/crear-pista" element={<CourtCreate />} />
+            <Route path="/editar-pista/:id" element={<CourtUpdate />} key="courtUpdate"/>
             <Route path="/contacto" element={<Contact />} />
             <Route path="/login" element={<Signin />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/users" element={<Users />} />
-            <Route path="/users/new" element={<UserForm />} key="userCreate" />
+            {/* <Route path="/users/new" element={<UserForm />} key="userCreate" /> */}
             <Route path="/users/:id" element={<UserForm />} key="userUpdate" />
-
             <Route path='*' element={<NoPage />} />
           </Route>
         </Routes>

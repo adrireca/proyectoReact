@@ -1,33 +1,33 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { contextData } from '../context/ContextProvider';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
 import Button from '@mui/material/Button';
 
-export const Exito = () => {
+export const ConfirmCourtEdit = () => {
 
     //Obtenemos todos los datos del contexto.
     const c = useContext(contextData);
 
     /* */
-    const [open, setOpen] = React.useState(false);
-    const [btnText, setbtnText] = React.useState('Crear pista'); /* Pone un texto u otro si es crear o editar. */
-
-    /* */
-    // const pista = {
-    //     luz: c.luz,
-    //     cubierta: c.cubierta,
-    //     disponible:c.disponible,
-    //     precioPista:c.precioPista,
-    //     precioLuz: c.precioLuz,
-    //     tipoPista: c.tipoPista,
-    // }
+    const [open, setOpen] = useState(false);
 
     const handleClick = () => {
+        /* */
+        const CourtEditModel = {
+            luz: c.court.luz,
+            cubierta: c.court.cubierta,
+            disponible: c.court.disponible,
+            precioPista: c.court.precioPista,
+            precioLuz: c.court.precioLuz,
+            tipoPista: c.court.tipoPista,
+        }
+
         /* Se muestra el mensaje si se ha rellenado todo el formulario. */
-        if (c.precioLuz) {
+        if (!Object.values(CourtEditModel).includes('')) {
             setOpen(true);
         }
+        console.log(CourtEditModel);
     };
 
     const handleClose = (event, reason) => {
@@ -48,12 +48,12 @@ export const Exito = () => {
                 className='btnSubmitForm'
                 sx={{ mt: 3, mb: 2 }}
             >
-                {btnText}
+                Editar pista
             </Button>
             {/* <button onClick={handleClick} id='boton' type="submit" className="btn btn-primary">Submit</button> */}
             <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
                 <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
-                    Pista creada con éxito.
+                    Pista modificada con éxito.
                 </Alert>
             </Snackbar>
         </>
