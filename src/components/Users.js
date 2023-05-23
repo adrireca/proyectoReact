@@ -15,6 +15,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import { palette } from '../library/Library.js';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
+import Loading from './Loading';
 
 export const Users = () => {
 
@@ -104,8 +105,12 @@ export const Users = () => {
             return
         }
 
+        /* */
+        setLoading(true);
+
         axiosClient.delete(`/users/${key}`)
             .then(() => {
+
                 console.log('Usuario eliminado correctamente.');
                 getUsers();
             })
@@ -115,42 +120,23 @@ export const Users = () => {
 
     /* Obtiene los usuarios. */
     const getUsers = () => {
+        /* */
         setLoading(true);
+
         axiosClient.get('/users')
             .then(({ data }) => {
+                /* */
                 setLoading(false);
+
                 setUsers(data.data)
             })
             .catch(() => {
+                /* */
                 setLoading(false);
             })
     }
 
 
-
-    /* Modifica usuario. */
-    const onUpdateClick = ((e) => {
-        e.preventDefault();
-        /* Registra usuario. */
-        axiosClient.put(`/users/${user.id}`, user)
-            .then(({ data }) => {
-                console.log(data);
-
-                /* Si tiene éxito el registro, reedirige a la home. */
-                // if (data.user) {
-                //     c.navigate('/');
-                // }
-
-            })
-            .catch(err => {
-                const response = err.response;
-                if (response && response.status === 422) {
-                    setErrors(response.data.errors)
-                }
-            })
-
-        console.log(user);
-    })
 
     return (
         <>
@@ -159,6 +145,9 @@ export const Users = () => {
                     <Link to={'/signup'} className='btnNewUser' >
                         <Button sx={{ mb: 1 }} variant='contained' size="small">New</Button>
                     </Link>
+                    {loading &&
+                        <Loading />
+                    }
                     {users ?
                         <div style={{ height: 400, width: '100%' }}>
                             <DataGrid
@@ -173,75 +162,12 @@ export const Users = () => {
                                 checkboxSelection
                             />
                         </div>
-                        :
-
+                    :
                         'No hay usuarios para mostrar.'
+                        
                     }
                 </Container>
 
-                {/* Diálogo para modificar usuario. */}
-                {/* <Dialog open={dialogOpen} onClose={onCloseClick}>
-                    <Box component="form" noValidate onSubmit={onUpdateClick}>
-                        <DialogTitle>Modificar usuario</DialogTitle> */}
-                        {/* Mensajes de error del formulario. */}
-                        {/* {errors &&
-                            <Box className="alert">
-                                {Object.keys(errors).map(key => (
-                                    <Typography key={key} color={redColor} variant="body2" gutterBottom>{errors[key][0]}</Typography>
-                                ))}
-                            </Box>
-                        } */}
-                        {/* <DialogContent>
-                            <TextField
-                                autoFocus
-                                margin="dense"
-                                label="Nombre"
-                                type="text"
-                                fullWidth
-                                variant="standard"
-                                required
-                                value={user.name}
-                                onChange={ev => setUser({ ...user, name: ev.target.value })}
-                            />
-                            <TextField
-                                autoFocus
-                                margin="dense"
-                                label="Email"
-                                type="email"
-                                fullWidth
-                                variant="standard"
-                                required
-                                value={user.email}
-                                onChange={ev => setUser({ ...user, email: ev.target.value })}
-                            />
-                            <TextField
-                                autoFocus
-                                margin="dense"
-                                label="Contraseña"
-                                type="password"
-                                fullWidth
-                                variant="standard"
-                                required
-                                onChange={ev => setUser({ ...user, password: ev.target.value })}
-                            />
-                            <TextField
-                                autoFocus
-                                margin="dense"
-                                label="COnfirmación contraseña"
-                                type="password"
-                                fullWidth
-                                variant="standard"
-                                required
-                                onChange={ev => setUser({ ...user, password_confirmation: ev.target.value })}
-                            />
-                        </DialogContent>
-                        <DialogActions>
-                            <Button onClick={onCloseClick}>Cancelar</Button>
-                            <Button type='submit' onClick={onUpdateClick}>Guardar</Button>
-                            <Link to={'/users/' + user.id}><Button>Prueba</Button></Link>
-                        </DialogActions>
-                    </Box>
-                </Dialog> */}
             </main>
         </>
     )

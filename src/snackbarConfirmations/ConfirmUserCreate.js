@@ -4,7 +4,7 @@ import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
 import Button from '@mui/material/Button';
 
-export const ConfirmCourtCreate = () => {
+export const ConfirmUserCreate = () => {
 
     /* Obtiene todos los datos del contexto. */
     const c = useContext(contextData);
@@ -14,20 +14,19 @@ export const ConfirmCourtCreate = () => {
 
     const handleClick = () => {
         /* */
-        const CourtCreateModel = {
-            luz: c.luz,
-            cubierta: c.cubierta,
-            disponible: c.disponible,
-            precioPista: c.precioPista,
-            precioLuz: c.precioLuz,
-            tipoPista: c.tipoPista,
-        }
+        const UserModel = {
+            name: c.name,
+            // lastName,
+            email: c.email,
+            password: c.password,
+            password_confirmation: c.passwordConfirmation,
+          }
 
         /* Se muestra el mensaje si se ha rellenado todo el formulario. */
-        if (!Object.values(CourtCreateModel).includes('')) {
+        if (!Object.values(UserModel).includes('')) {
             setOpen(true);
         }
-        console.log(CourtCreateModel);
+        console.log(UserModel);
     };
 
     const handleClose = (event, reason) => {
@@ -48,12 +47,12 @@ export const ConfirmCourtCreate = () => {
                 className='btnSubmitForm'
                 sx={{ mt: 3, mb: 2 }}
             >
-                Crear pista
+                Regístrate
             </Button>
             {/* <button onClick={handleClick} id='boton' type="submit" className="btn btn-primary">Submit</button> */}
             <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
                 <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
-                    Pista creada con éxito.
+                    Usuario creado con éxito.
                 </Alert>
             </Snackbar>
         </>

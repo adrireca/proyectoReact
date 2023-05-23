@@ -16,10 +16,11 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { palette } from '../library/Library.js';
+import Loading from './Loading';
 
 const theme = createTheme();
 
-export const UserForm = () => {
+export const UserUpdate = () => {
     /* Utiliza los parámetros de la ruta padre. */
     let { id } = useParams();
     /* Datos del contexto. */
@@ -35,17 +36,22 @@ export const UserForm = () => {
     const [loading, setLoading] = useState(false);
 
     /* */
-  const redColor = palette.redColor;
+    const redColor = palette.redColor;
 
     // if (id) {
     useEffect(() => {
-        setLoading(true)
+        /* */
+        setLoading(true);
+
         axiosClient.get(`/users/${id}`)
             .then(({ data }) => {
-                setLoading(false)
-                setUser(data)
+                /* */
+                setLoading(false);
+
+                setUser(data);
             })
             .catch(() => {
+                /* */
                 setLoading(false)
             })
     }, [])
@@ -54,9 +60,16 @@ export const UserForm = () => {
 
     const onSubmit = ev => {
         ev.preventDefault()
+
+        /* */
+        setLoading(true);
+
         if (user.id) {
             axiosClient.put(`/users/${user.id}`, user)
                 .then(() => {
+                    // /* */
+                    // setLoading(false);
+
                     // setNotification('User was successfully updated')
                     c.navigate('/users')
                 })
@@ -66,19 +79,20 @@ export const UserForm = () => {
                         setErrors(response.data.errors)
                     }
                 })
-        } else {
-            axiosClient.post('/users', user)
-                .then(() => {
-                    // setNotification('User was successfully created')
-                    c.navigate('/users')
-                })
-                .catch(err => {
-                    const response = err.response;
-                    if (response && response.status === 422) {
-                        setErrors(response.data.errors)
-                    }
-                })
-        }
+            }
+        // } else {
+        //     axiosClient.post('/users', user)
+        //         .then(() => {
+        //             // setNotification('User was successfully created')
+        //             c.navigate('/users')
+        //         })
+        //         .catch(err => {
+        //             const response = err.response;
+        //             if (response && response.status === 422) {
+        //                 setErrors(response.data.errors)
+        //             }
+        //         })
+        // }
     }
 
     return (
@@ -96,7 +110,10 @@ export const UserForm = () => {
                         }}
                     >
                         {user.id && <Typography component="h1" variant="h5">Actualizar usuario: {user.name}</Typography>}
-                        {!user.id && <Typography component="h1" variant="h5">Nuevo usuario</Typography>}
+                        {loading &&
+                            <Loading />
+                        }
+                        {/* {!user.id && <Typography component="h1" variant="h5">Nuevo usuario</Typography>} */}
                         <Box component="form" noValidate onSubmit={onSubmit} sx={{ mt: 3 }}>
                             {/* Mensajes de error del formulario. */}
                             {errors &&

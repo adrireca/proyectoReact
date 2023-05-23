@@ -24,6 +24,8 @@ import Select from '@mui/material/Select';
 import axiosClient from "../axios-client.js";
 import Button from '@mui/material/Button';
 import { ConfirmCourtEdit } from '../snackbarConfirmations/ConfirmCourtEdit';
+import { palette } from '../library/Library.js';
+import Loading from './Loading';
 
 export const CourtUpdate = () => {
 
@@ -44,36 +46,68 @@ export const CourtUpdate = () => {
   //   tipoPista: ''
   // });
 
+  /* */
+  const [errors, setErrors] = useState(null);
+
+  /* */
+  const redColor = palette.redColor;
+
+  /* */
+  const [loading, setLoading] = useState(false);
+
+
   useEffect(() => {
-    axiosClient.get(`/pistas/${id}`)
-      .then(({ data }) => {
-        c.setCourt(data);
-        // setLoading(false)
-        // setUser(data)
-      })
-      .catch(() => {
-        // setLoading(false)
-      })
+    getCourts();
   }, []);
 
-  const editar = (e) => {
+
+  /* */
+  const getCourts = () => {
+    /* */
+    setLoading(true);
+
+    axiosClient.get(`/pistas/${id}`)
+      .then(({ data }) => {
+        /* */
+        setLoading(false);
+
+        c.setCourt(data);
+
+      })
+      .catch(() => {
+        /* */
+        setLoading(false)
+      })
+  }
+
+
+  const updateCourt = (e) => {
     //Deshabilitamos el refresco al click del botón.
     e.preventDefault();
 
+    /* */
+    setLoading(true);
+
     axiosClient.put(`/pistas/${c.court.id}`, c.court)
       .then(() => {
+        /* */
+        // setLoading(false);
+
         // setNotification('User was successfully updated')
         c.navigate('/pistas');
       })
       .catch(err => {
-        console.log(err);
-        // const response = err.response;
-        // if (response && response.status === 422) {
-        //   setErrors(response.data.errors)
-        // }
-      })
+        /* */
+        setLoading(false);
 
+        const response = err.response;
+        if (response && response.status === 422) {
+          setErrors(response.data.errors)
+        }
+      })
   }
+
+
 
   return (
     <React.Fragment>
@@ -89,10 +123,22 @@ export const CourtUpdate = () => {
             alignItems: 'center',
           }}
         >
+          {/*  */}
+          {loading &&
+            <Loading />
+          }
           <Typography component="h2" variant="h5" className='titleFormEditCreate' >
             Introduce los datos de la pista:
           </Typography>
-          <Box component="form" onSubmit={editar} noValidate sx={{ mt: 3 }}>
+          <Box component="form" onSubmit={updateCourt} noValidate sx={{ mt: 3 }}>
+            {/* Mensajes de error del formulario. */}
+            {errors &&
+              <Box className="alert">
+                {Object.keys(errors).map(key => (
+                  <Typography key={key} color={redColor} variant="body2" gutterBottom>{errors[key][0]}</Typography>
+                ))}
+              </Box>
+            }
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <FormGroup>

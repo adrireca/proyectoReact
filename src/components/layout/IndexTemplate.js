@@ -16,7 +16,6 @@ export const IndexTemplate = () => {
       <CallToAction />
       <Facilities />
       <ServicesTemplate />
-      <Footer />
     </React.Fragment>
   )
 }

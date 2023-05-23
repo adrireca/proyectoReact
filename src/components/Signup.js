@@ -65,14 +65,13 @@ export const Signup = () => {
     /* Registra usuario. */
     axiosClient.post('/signup', RegisterUserModel)
       .then(({ data }) => {
+        /* */
+        setOpen(true);
+
         c.setUser(data.user)
         c.setToken(data.token);
 
-        /* Si tiene éxito el registro, reedirige a la home. */
-        if (data.user) {
-          setOpen(true);
-          c.navigate('/');
-        }
+        c.navigate('/');
 
       })
       .catch(err => {

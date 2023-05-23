@@ -58,7 +58,7 @@ export const Nav = () => {
                         {/* Logo header. */}
                         <div className="logo_header">
                             <Link to="/" className='enlaces'>
-                                <img src="img/logo_club_2.png" alt="Logo" />
+                                <img src="img/logo_nav.svg" alt="Logo" />
                             </Link>
                         </div>
 

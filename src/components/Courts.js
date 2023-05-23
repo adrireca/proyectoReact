@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
@@ -18,6 +18,7 @@ import { Box, ButtonGroup } from '@mui/material';
 import { Link } from 'react-router-dom';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
+import Loading from './Loading';
 
 const Alert = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -49,12 +50,57 @@ export const Courts = () => {
     /* Si no hay token reedirige al login. */
     c.loginRedirect();
 
+    /* */
+    const [loading, setLoading] = useState(false);
+
+    /* */
+    const [courts, setCourts] = useState([{
+        id: null,
+        luz: false,
+        cubierta: false,
+        disponible: false,
+        precioPista: 0,
+        precioLuz: 0,
+        tipoPista: '',
+    }]);
+
+
+    //Muestra las pistas al cargar la página.
+    useEffect(() => {
+        // c.getPistas();
+        getCourts();
+    }, []);
+
+
+    /* Obtiene los usuarios. */
+    const getCourts = () => {
+        /* */
+        setLoading(true);
+
+        axiosClient.get('/pistas')
+            .then(({ data }) => {
+                /* */
+                setLoading(false);
+
+                setCourts(data);
+
+            })
+            .catch(() => {
+                /* */
+                setLoading(false);
+            })
+    }
+
+
     /* Elimina una pista. */
     const onDeleteClick = ((e) => {
         /* Solo elimina si confirma el usuario. */
         if (!window.confirm('¿Estás seguro?')) {
             return
         }
+
+        /* */
+        setLoading(true);
 
         axiosClient.delete(`/pistas/${e.target.id}`)
             .then(() => {
@@ -64,22 +110,18 @@ export const Courts = () => {
                 setOpen(true);
 
                 /* Al eliminar una pista vuelve a cargar las pistas. */
-                c.getPistas();
+                getCourts();
             })
 
     });
 
 
-    //Muestra las pistas al cargar la página.
-    useEffect(() => {
-        c.getPistas();
-    }, []);
 
     return (
         <ThemeProvider theme={theme}>
             <main>
-                <Container className='divTracks' maxWidth="sm">
-                    <Typography className='titleTracks' variant="h2" align="center" color="text.secondary" >
+                <Container className='divCourts' maxWidth="sm">
+                    <Typography sx={{textTransform: 'uppercase', fontSize: '2.2rem'}} className='titleTracks' variant="h2" align="center" color="text.secondary" >
                         Nuestras pistas
                     </Typography>
                     {/* <Stack
@@ -94,10 +136,14 @@ export const Courts = () => {
                 </Container>
 
                 <Container sx={{ py: 8 }} maxWidth="lg">
+                    {/*  */}
+                    {loading &&
+                        <Loading />
+                    }
                     <Grid container spacing={4}>
                         {/* Se recorre y se comprueba si existen o no pistas. */}
-                        {c.pistas.pistas ?
-                            c.pistas.pistas.map((p, i) => {
+                        {courts.pistas ?
+                            courts.pistas.map((p, i) => {
                                 return (
                                     <Grid item key={i} xs={12} sm={6} md={4}>
                                         <Card
@@ -157,7 +203,7 @@ export const Courts = () => {
                                             </CardContent>
                                             <CardActions>
                                                 <ButtonGroup variant="text" size="small" aria-label="text button group">
-                                                <Link to={`/editar-pista/${p.id}`} ><Button>Editar</Button></Link>
+                                                    <Link to={`/editar-pista/${p.id}`} ><Button>Editar</Button></Link>
                                                     {/* <Link to='/editar-pista' ><Button onClick={() => c.setId(p.id)}>Editar</Button></Link> */}
                                                     <Button id={p.id} onClick={(e) => onDeleteClick(e)} color='error'>Eliminar</Button>
                                                     {/* <AlertDialog /> */}

@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { contextData } from '../context/ContextProvider';
 // import axios from 'axios';
 import { ConfirmCourtCreate } from '../snackbarConfirmations/ConfirmCourtCreate';
@@ -22,6 +22,8 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import axiosClient from "../axios-client.js";
+import { palette } from '../library/Library.js';
+import Loading from './Loading';
 // import Button from '@mui/material/Button';
 
 
@@ -33,10 +35,22 @@ export const CourtCreate = () => {
     /* Si no hay token reedirige al login. */
     c.loginRedirect();
 
+    /* */
+    const [errors, setErrors] = useState(null);
+
+    /* */
+    const redColor = palette.redColor;
+
+    /* */
+    const [loading, setLoading] = useState(false);
+
     /* Guarda una pista */
     const onSubmit = async (e) => {
         //Deshabilitamos el refresco al click del botón.
         e.preventDefault();
+
+        /* */
+        setLoading(true);
 
         const CourtCreateModel = {
             luz: c.luz,
@@ -49,6 +63,9 @@ export const CourtCreate = () => {
 
         axiosClient.post('/pistas', CourtCreateModel)
             .then(({ data }) => {
+                /* */
+                setLoading(false);
+
                 /* Vaciamos los campos del formulario. */
                 resetFormField();
 
@@ -56,8 +73,15 @@ export const CourtCreate = () => {
                 c.navigate('/pistas');
             })
             .catch(err => {
-                console.log(err);
+                /* */
+                setLoading(false);
+
+                const response = err.response;
+                if (response && response.status === 422) {
+                    setErrors(response.data.errors)
+                }
             });
+
     };
 
     /* Rsetea los campos del formulario. */
@@ -86,10 +110,22 @@ export const CourtCreate = () => {
                         alignItems: 'center',
                     }}
                 >
+                    {loading &&
+                        <Loading />
+                    }
                     <Typography component="h2" variant="h5" className='titleFormEditCreate' >
                         Introduce los datos de la pista:
                     </Typography>
+                    
                     <Box component="form" onSubmit={onSubmit} noValidate sx={{ mt: 3 }}>
+                        {/* Mensajes de error del formulario. */}
+                        {errors &&
+                            <Box className="alert">
+                                {Object.keys(errors).map(key => (
+                                    <Typography key={key} color={redColor} variant="body2" gutterBottom>{errors[key][0]}</Typography>
+                                ))}
+                            </Box>
+                        }
                         <Grid container spacing={2}>
                             <Grid item xs={12}>
                                 <FormGroup>

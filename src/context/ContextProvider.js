@@ -44,9 +44,18 @@ export const ContextProvider = (props) => {
   /* */
   const navigate = useNavigate();
 
+  /* */
+  const [loading, setLoading] = useState(false);
+
   //Obtenemos las pistas.
   const getPistas = async () => {
+    /* */
+    setLoading(true);
+
     let datos = await obtenerDatos(url);
+    /* */
+    setLoading(false);
+    
     setPistas(datos);
   };
 

@@ -13,7 +13,8 @@ import { Signup } from "./components/Signup";
 import { Contact } from "./components/Contact";
 import { Courts } from "./components/Courts";
 import { Users } from "./components/Users";
-import { UserForm } from "./components/UserForm";
+import { UserUpdate } from "./components/UserUpdate";
+import { Footer } from "./components/layout/Footer";
 // import { UserForm } from "./components/UserForm";
 // import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
@@ -35,10 +36,12 @@ function App() {
             <Route path="/signup" element={<Signup />} />
             <Route path="/users" element={<Users />} />
             {/* <Route path="/users/new" element={<UserForm />} key="userCreate" /> */}
-            <Route path="/users/:id" element={<UserForm />} key="userUpdate" />
+            <Route path="/users/:id" element={<UserUpdate />} key="userUpdate" />
             <Route path='*' element={<NoPage />} />
           </Route>
         </Routes>
+        {/*  */}
+        <Footer />
       </ContextProvider>
     </React.Fragment>
   );
