@@ -38,6 +38,12 @@ export const ContextProvider = (props) => {
     tipoPista: ''
   });
 
+  // const [name, setFirstName] = useState('');
+  // // const [lastName, setLastName] = useState('');
+  // const [email, setEmail] = useState('');
+  // const [password, setPassword] = useState('');
+  // const [passwordConfirmation, setPasswordConfirmation] = useState('');
+
   const [user, setUser] = useState({});
   const [token, _setToken] = useState(localStorage.getItem('ACCESS_TOKEN'));
 
@@ -102,7 +108,7 @@ export const ContextProvider = (props) => {
     navigate,
     loginRedirect,
     court,
-    setCourt
+    setCourt,
   };
 
 

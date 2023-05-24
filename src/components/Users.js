@@ -6,15 +6,15 @@ import { DataGrid } from '@mui/x-data-grid';
 import { Button } from '@mui/material';
 import { ButtonGroup } from '@mui/material';
 import { Link } from "react-router-dom";
-import TextField from '@mui/material/TextField';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
+// import TextField from '@mui/material/TextField';
+// import Dialog from '@mui/material/Dialog';
+// import DialogActions from '@mui/material/DialogActions';
+// import DialogContent from '@mui/material/DialogContent';
 // import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
+// import DialogTitle from '@mui/material/DialogTitle';
 import { palette } from '../library/Library.js';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
+// import Box from '@mui/material/Box';
+// import Typography from '@mui/material/Typography';
 import Loading from './Loading';
 
 export const Users = () => {
@@ -38,12 +38,12 @@ export const Users = () => {
         password_confirmation: ''
     })
     /* Manejador del diálogo. */
-    const [dialogOpen, setDialogOpen] = useState(false);
+    // const [dialogOpen, setDialogOpen] = useState(false);
 
     /* Cierra diálogo. */
-    const onCloseClick = () => {
-        setDialogOpen(false);
-    };
+    // const onCloseClick = () => {
+    //     setDialogOpen(false);
+    // };
 
     /* Columnas de la table. */
     const columns = [
@@ -145,6 +145,7 @@ export const Users = () => {
                     <Link to={'/signup'} className='btnNewUser' >
                         <Button sx={{ mb: 1 }} variant='contained' size="small">New</Button>
                     </Link>
+                    {/*  */}
                     {loading &&
                         <Loading />
                     }
@@ -164,7 +165,6 @@ export const Users = () => {
                         </div>
                     :
                         'No hay usuarios para mostrar.'
-                        
                     }
                 </Container>
 

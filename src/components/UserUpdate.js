@@ -17,6 +17,7 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { palette } from '../library/Library.js';
 import Loading from './Loading';
+import { ConfirmUserEdit } from '../snackbarConfirmations/ConfirmUserEdit';
 
 const theme = createTheme();
 
@@ -32,7 +33,9 @@ export const UserUpdate = () => {
         password: '',
         password_confirmation: ''
     });
+    /* */
     const [errors, setErrors] = useState(null);
+    /* */
     const [loading, setLoading] = useState(false);
 
     /* */
@@ -132,7 +135,7 @@ export const UserUpdate = () => {
                                         onChange={ev => setUser({ ...user, name: ev.target.value })}
                                         autoComplete="given-name"
                                         // name="name"
-                                        required
+                                        // required
                                         fullWidth
                                         // id="firstName"
                                         label="Nombre"
@@ -156,7 +159,7 @@ export const UserUpdate = () => {
                                         // ref={emailRef}
                                         value={user.email}
                                         onChange={ev => setUser({ ...user, email: ev.target.value })}
-                                        required
+                                        // required
                                         fullWidth
                                         // id="email"
                                         label="Email"
@@ -169,7 +172,7 @@ export const UserUpdate = () => {
                                         type='password'
                                         // ref={passwordRef}
                                         onChange={ev => setUser({ ...user, password: ev.target.value })}
-                                        required
+                                        // required
                                         fullWidth
                                         name="password"
                                         label="Contraseña"
@@ -182,7 +185,7 @@ export const UserUpdate = () => {
                                         type='password'
                                         // ref={passwordConfirmationRef}
                                         onChange={ev => setUser({ ...user, password_confirmation: ev.target.value })}
-                                        required
+                                        // required
                                         fullWidth
                                         name="passwordConfirmation"
                                         label="Repite la contraseña"
@@ -197,7 +200,8 @@ export const UserUpdate = () => {
                 />
               </Grid> */}
                             </Grid>
-                            <Button
+                            <ConfirmUserEdit />
+                            {/* <Button
                                 type="submit"
                                 fullWidth
                                 variant="contained"
@@ -205,7 +209,7 @@ export const UserUpdate = () => {
                                 sx={{ mt: 3, mb: 2 }}
                             >
                                 Guardar
-                            </Button>
+                            </Button> */}
                         </Box>
                     </Box>
                 </Container>

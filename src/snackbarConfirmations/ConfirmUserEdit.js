@@ -4,29 +4,31 @@ import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
 import Button from '@mui/material/Button';
 
-export const ConfirmUserCreate = () => {
+export const ConfirmUserEdit = () => {
 
-    /* Obtiene todos los datos del contexto. */
+    //Obtenemos todos los datos del contexto.
     const c = useContext(contextData);
 
     /* */
     const [open, setOpen] = useState(false);
 
-
     const handleClick = () => {
         /* */
-        const UserModel = {
-            name: c.name,
-            email: c.email,
-            password: c.password,
-            password_confirmation: c.passwordConfirmation,
-        }
+        // const CourtEditModel = {
+        //     luz: c.court.luz,
+        //     cubierta: c.court.cubierta,
+        //     disponible: c.court.disponible,
+        //     precioPista: c.court.precioPista,
+        //     precioLuz: c.court.precioLuz,
+        //     tipoPista: c.court.tipoPista,
+        // }
 
         /* Se muestra el mensaje si se ha rellenado todo el formulario. */
-        if (!Object.values(UserModel).includes('')) {
-            setOpen(true);
-        }
-        console.log(UserModel);
+        // if (!Object.values(CourtEditModel).includes('')) {
+        //     setOpen(true);
+        // }
+        // console.log(CourtEditModel);
+        setOpen(true);
     };
 
     const handleClose = (event, reason) => {
@@ -47,12 +49,12 @@ export const ConfirmUserCreate = () => {
                 className='btnSubmitForm'
                 sx={{ mt: 3, mb: 2 }}
             >
-                Regístrate
+                Editar usuario
             </Button>
             {/* <button onClick={handleClick} id='boton' type="submit" className="btn btn-primary">Submit</button> */}
             <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
                 <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
-                    Usuario creado con éxito.
+                    Usuario modificado con éxito.
                 </Alert>
             </Snackbar>
         </>

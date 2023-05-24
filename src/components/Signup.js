@@ -18,6 +18,8 @@ import { contextData } from '../context/ContextProvider';
 import { palette } from '../library/Library.js';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
+import Loading from './Loading';
+import { ConfirmUserCreate } from '../snackbarConfirmations/ConfirmUserCreate.js';
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -34,24 +36,31 @@ export const Signup = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [passwordConfirmation, setPasswordConfirmation] = useState('');
+
   const c = useContext(contextData);
   const [errors, setErrors] = useState(null);
   /* */
   const redColor = palette.redColor;
   /* */
-  const [open, setOpen] = useState(false);
+  // const [open, setOpen] = useState(false);
 
-  const onCloseClick = (event, reason) => {
-    if (reason === 'clickaway') {
-      return;
-    }
+  /* */
+  const [loading, setLoading] = useState(false);
 
-    setOpen(false);
-  };
+  // const onCloseClick = (event, reason) => {
+  //   if (reason === 'clickaway') {
+  //     return;
+  //   }
+
+  //   setOpen(false);
+  // };
 
 
   const onSubmit = event => {
     event.preventDefault();
+
+    /* */
+    setLoading(true);
 
     /* Modelo del signup. */
     const RegisterUserModel = {
@@ -66,7 +75,10 @@ export const Signup = () => {
     axiosClient.post('/signup', RegisterUserModel)
       .then(({ data }) => {
         /* */
-        setOpen(true);
+        setLoading(false);
+
+        /* */
+        // setOpen(true);
 
         c.setUser(data.user)
         c.setToken(data.token);
@@ -75,6 +87,9 @@ export const Signup = () => {
 
       })
       .catch(err => {
+        /* */
+        setLoading(false);
+
         const response = err.response;
         if (response && response.status === 422) {
           setErrors(response.data.errors)
@@ -84,6 +99,7 @@ export const Signup = () => {
     console.log(RegisterUserModel);
 
   };
+
 
   return (
     <ThemeProvider theme={theme}>
@@ -105,6 +121,10 @@ export const Signup = () => {
             <Typography component="h1" variant="h5">
               Registro
             </Typography>
+            {/*  */}
+            {loading &&
+              <Loading />
+            }
             <Box component="form" noValidate onSubmit={onSubmit} sx={{ mt: 3 }}>
               {/* Mensajes de error del formulario. */}
               {errors &&
@@ -186,6 +206,7 @@ export const Signup = () => {
                 />
               </Grid> */}
               </Grid>
+              {/* <ConfirmUserCreate /> */}
               <Button
                 type="submit"
                 fullWidth
@@ -207,12 +228,12 @@ export const Signup = () => {
         </Container>
 
         {/* Snackbar de confirmación. */}
-        <Snackbar open={open} autoHideDuration={6000} onClose={onCloseClick}>
+        {/* <Snackbar open={open} autoHideDuration={6000} onClose={onCloseClick}>
           <Alert onClose={onCloseClick} severity="success" sx={{ width: '100%' }}>
             Usuario registrado con éxito.
           </Alert>
-        </Snackbar>
-        
+        </Snackbar> */}
+
       </main>
     </ThemeProvider>
   )

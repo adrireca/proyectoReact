@@ -255,7 +255,21 @@ header .logo_header img {
 
 
 /* Footer. */
-.divArrow {
+.divFooter {
+  background-color: #364991;
+  padding: 50px 0 10px 0;
+}
+
+.divFooter ul li a, .divFooter p {
+  color: #fff !important;
+}
+
+.divFooter .divArrow {
   text-align: end;
+}
+
+.divFooter .divArrow svg {
   cursor: pointer;
+  color: #fff;
+  font-size: 50px;
 }
