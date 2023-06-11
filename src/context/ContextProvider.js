@@ -15,7 +15,7 @@ export const ContextProvider = (props) => {
 
   /* Url de la api. */
   /* Empresa port:80, Casa port:8090. */
-  const url = "http://localhost:80/api/pistas";
+  // const url = "http://localhost:80/api/pistas";
   const valorInicial = [];
 
   /* Estados que utilizamos para recoger y actualizar los datos de los formularios. */
@@ -54,16 +54,16 @@ export const ContextProvider = (props) => {
   const [loading, setLoading] = useState(false);
 
   //Obtenemos las pistas.
-  const getPistas = async () => {
-    /* */
-    setLoading(true);
+  // const getPistas = async () => {
+  //   /* */
+  //   setLoading(true);
 
-    let datos = await obtenerDatos(url);
-    /* */
-    setLoading(false);
+  //   let datos = await obtenerDatos(url);
+  //   /* */
+  //   setLoading(false);
     
-    setPistas(datos);
-  };
+  //   setPistas(datos);
+  // };
 
   /* */
   const setToken = (token) => {
@@ -87,8 +87,6 @@ export const ContextProvider = (props) => {
     id,
     setId,
     pistas,
-    getPistas,
-    url,
     luz,
     setLuz,
     cubierta,
@@ -108,7 +106,7 @@ export const ContextProvider = (props) => {
     navigate,
     loginRedirect,
     court,
-    setCourt,
+    setCourt
   };
 
 

@@ -15,6 +15,7 @@ import { Courts } from "./components/Courts";
 import { Users } from "./components/Users";
 import { UserUpdate } from "./components/UserUpdate";
 import { Footer } from "./components/layout/Footer";
+import { Reservation } from "./components/Reservation";
 // import { UserForm } from "./components/UserForm";
 // import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
@@ -31,6 +32,7 @@ function App() {
             {/* <Route path="/pistas" element={<Pistas />} /> */}
             <Route path="/crear-pista" element={<CourtCreate />} />
             <Route path="/editar-pista/:id" element={<CourtUpdate />} key="courtUpdate"/>
+            <Route path="/reservas" element={<Reservation />} />
             <Route path="/contacto" element={<Contact />} />
             <Route path="/login" element={<Signin />} />
             <Route path="/signup" element={<Signup />} />

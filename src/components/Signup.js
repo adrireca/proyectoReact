@@ -110,6 +110,7 @@ export const Signup = () => {
             sx={{
               marginTop: 8,
               paddingTop: '100px',
+              paddingBottom: '80px',
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',

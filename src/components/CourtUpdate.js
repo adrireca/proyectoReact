@@ -118,6 +118,7 @@ export const CourtUpdate = () => {
           sx={{
             marginTop: 8,
             paddingTop: '100px',
+            paddingBottom: '60px',
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',

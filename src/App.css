@@ -27,7 +27,7 @@
 
 
 
-
+/* Estilos de la home. */
 
 /* Header. */
 .navbar{
@@ -205,7 +205,39 @@ header .logo_header img {
 
 
 
-/* Landing sign in, sign up y contact. */
+/* Footer. */
+.divFooter {
+  background-color: #364991;
+  padding: 50px 0 10px 0;
+}
+
+.divFooter ul li a, .divFooter p {
+  color: #fff !important;
+}
+
+.divFooter .divArrow {
+  text-align: end;
+}
+
+.divFooter .divArrow svg {
+  cursor: pointer;
+  color: #fff;
+  font-size: 50px;
+}
+
+
+
+
+
+/* Landings. */
+
+/* Landing login. */
+
+
+
+
+
+/* Landing login, sign up y contact. */
 .enlacesSignin, .enlacesSignup, .enlacesContact {
   font-size: 0.875rem;
   color: #1976d2;
@@ -241,7 +273,7 @@ header .logo_header img {
 
 /* Landing not found. */
 .divNotFound {
-  width: 60%;
+  width: 50%;
   margin: auto;
   padding-top: 60px;
 }
@@ -254,22 +286,3 @@ header .logo_header img {
 
 
 
-/* Footer. */
-.divFooter {
-  background-color: #364991;
-  padding: 50px 0 10px 0;
-}
-
-.divFooter ul li a, .divFooter p {
-  color: #fff !important;
-}
-
-.divFooter .divArrow {
-  text-align: end;
-}
-
-.divFooter .divArrow svg {
-  cursor: pointer;
-  color: #fff;
-  font-size: 50px;
-}

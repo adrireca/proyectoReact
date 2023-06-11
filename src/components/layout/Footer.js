@@ -18,7 +18,7 @@ export const Footer = () => {
             <li className="nav-item"><a href="#" className="nav-link px-2 text-muted">Política de privacidad</a></li>
             <li className="nav-item"><a href="#" className="nav-link px-2 text-muted">Política de cookies</a></li>
           </ul>
-          <p className="text-center text-muted">&copy; {new Date().getFullYear()} Designed and developed by Adrián Moya - Adrián Reyes</p>
+          <p className="text-center text-muted">&copy; {new Date().getFullYear()} Designed and developed by Adrián Reyes - Adrián Moya</p>
           {/*  */}
           <div className='divArrow' >
             <KeyboardArrowUpIcon onClick={scrollToTop}/>
